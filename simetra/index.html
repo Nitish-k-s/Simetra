@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIMETRA | Surgical Precision Training</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#0891b2",
+          "on-primary": "#FFFFFF",
+          "background": "#ffffff",
+          "surface": "#f8fafc",
+          "surface-container": "#f1f5f9",
+          "surface-container-high": "#e2e8f0",
+          "on-background": "#0f172a",
+          "on-surface": "#1e293b",
+          "on-surface-variant": "#475569",
+          "outline": "#e2e8f0",
+          "outline-variant": "#cbd5e1",
+          "tertiary": "#e11d48"
+        },
+        borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "0px" },
+        fontFamily: { "headline": ["Space Grotesk"], "body": ["Inter"], "label": ["Space Grotesk"] }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { background-color: #ffffff; color: #0f172a; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  .hud-grid { background-image: radial-gradient(circle at 1px 1px, rgba(8,145,178,0.07) 1px, transparent 0); background-size: 32px 32px; }
+  .scan-line { width: 100%; height: 1px; background: linear-gradient(to right, transparent, #0891b2, transparent); position: absolute; top: 0; animation: scan 6s linear infinite; opacity: 0.15; }
+  @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+  .navy-section { background-color: #0f172a; }
+
+  /* scanlines */
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(8,145,178,0.012) 3px,rgba(8,145,178,0.012) 4px);pointer-events:none;z-index:9999}
+
+  /* cursor glow */
+  #cursor-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,0.06) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:9998;transition:opacity .3s}
+
+  /* nav glow on scroll */
+  nav.scrolled{box-shadow:0 0 30px rgba(8,145,178,0.15)!important}
+
+  /* hero title glitch */
+  @keyframes glitch{0%,100%{text-shadow:0 0 20px rgba(8,145,178,.6)}25%{text-shadow:-2px 0 rgba(8,145,178,.8),2px 0 rgba(6,182,212,.5)}75%{text-shadow:2px 0 rgba(8,145,178,.8),-2px 0 rgba(6,182,212,.5)}}
+  h1.glitch{animation:glitch 4s infinite}
+
+  /* button pulse */
+  a.cta-pulse{position:relative;overflow:hidden}
+  a.cta-pulse::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.08);transform:translateX(-100%);transition:transform .4s}
+  a.cta-pulse:hover::after{transform:translateX(0)}
+
+  /* card hover lift */
+  .lift-card{transition:transform .3s,box-shadow .3s}
+  .lift-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(8,145,178,0.15)}
+
+  /* particle canvas */
+  #bg-particles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.6}
+</style>
+</head>
+<body class="hud-grid">
+
+<canvas id="bg-particles"></canvas>
+<div id="cursor-glow"></div>
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200">
+  <div class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk']">SIMETRA</div>
+  <div class="hidden md:flex gap-8 items-center">
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-[#0891b2] border-b-2 border-[#0891b2] pb-1" href="index.html">HOME</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="procedures.html">PROCEDURES</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="simulation.html">SIMULATION</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="#">RESOURCES</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="evaluation.html">EVALUATION</a>
+  </div>
+  <div class="flex items-center gap-6">
+    <div class="flex gap-4 text-[#0891b2]">
+      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1">settings</span>
+      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1">notifications_active</span>
+    </div>
+    <div class="font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold px-3 py-1 border border-[#0891b2]/30 text-[#0891b2] bg-[#0891b2]/5">
+      SYSTEM ACTIVE
+    </div>
+  </div>
+</nav>
+
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-[#f8fafc] border-r border-slate-200 w-20 hover:w-64 transition-all duration-300 group overflow-hidden">
+  <div class="px-6 mb-10 flex items-center gap-4">
+    <div class="w-8 h-8 bg-slate-100 flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-[#0891b2] text-xl">account_circle</span>
+    </div>
+    <div class="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+      <p class="font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2]">SURGEON_01</p>
+      <p class="font-['Space_Grotesk'] text-[8px] text-slate-400 uppercase">RANK: ADVANCED</p>
+    </div>
+  </div>
+  <div class="flex flex-col gap-2 flex-grow">
+    <a class="flex items-center gap-4 px-6 py-4 bg-[#0891b2]/10 text-[#0891b2] border-r-4 border-[#0891b2]" href="index.html">
+      <span class="material-symbols-outlined">grid_view</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">DASHBOARD</span>
+    </a>
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+      <span class="material-symbols-outlined">psychology</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">NEURAL_LINK</span>
+    </a>
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+      <span class="material-symbols-outlined">monitor_heart</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">BIO_TELEMETRY</span>
+    </a>
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+      <span class="material-symbols-outlined">database</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">ARCHIVE</span>
+    </a>
+  </div>
+  <div class="px-4 mt-auto">
+    <a href="procedures.html" class="block w-full bg-[#0891b2] text-white py-3 font-['Space_Grotesk'] text-[10px] font-bold tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-center">
+      INITIALIZE_SIM
+    </a>
+  </div>
+</aside>
+
+<main class="ml-20 pt-24 min-h-screen">
+  <!-- Hero -->
+  <section class="relative px-10 py-20 flex flex-col items-center justify-center min-h-[80vh] text-center">
+    <!-- Background Image -->
+    <div class="absolute inset-0 overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1800&auto=format&fit=crop&q=80"
+        alt="Operating room background"
+        class="w-full h-full object-cover object-center"
+      />
+      <!-- Overlay: white wash + subtle teal tint -->
+      <div class="absolute inset-0 bg-white/85"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0891b2]/5 via-transparent to-white/60"></div>
+    </div>
+    <div class="max-w-4xl z-10">
+      <h1 class="text-7xl md:text-9xl font-black tracking-tighter text-[#0891b2] mb-6 font-['Space_Grotesk'] uppercase glitch">SIMETRA</h1>
+      <p class="text-xl md:text-2xl text-slate-500 font-['Inter'] font-light tracking-wide max-w-2xl mx-auto mb-10 border-l-2 border-[#0891b2]/30 pl-6 text-left">
+        Practice surgical procedures with <span class="text-[#0891b2] font-medium">real-time AI evaluation</span>—directly in your browser.
+      </p>
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+        <a href="procedures.html" class="bg-[#0891b2] text-white px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-[#0891b2]/20 flex items-center gap-3 justify-center cta-pulse">
+          Start Training <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+        <button class="border border-[#0891b2] text-[#0891b2] px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:bg-[#0891b2]/5 transition-colors">
+          View Sandbox
+        </button>
+      </div>
+    </div>
+    <div class="absolute bottom-10 flex flex-col items-center gap-2">
+      <span class="text-[8px] font-['Space_Grotesk'] tracking-[0.5em] text-slate-400">SCROLL</span>
+      <div class="w-[1px] h-12 bg-gradient-to-b from-[#0891b2] to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- Workflow -->
+  <section class="navy-section px-10 py-24 border-y border-slate-800">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#0891b2]/10 flex items-center justify-center border border-[#0891b2]/20 mb-6">
+          <span class="material-symbols-outlined text-[#0891b2] text-3xl">precision_manufacturing</span>
+        </div>
+        <h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-white">PERFORM ACTION</h5>
+        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Execute surgical steps within the simulated environment</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#0891b2]/10 flex items-center justify-center border border-[#0891b2]/20 mb-6">
+          <span class="material-symbols-outlined text-[#0891b2] text-3xl">sensors</span>
+        </div>
+        <h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-white">SYSTEM TRACKS</h5>
+        <p class="text-[10px] text-slate-400 uppercase tracking-wider">High-fidelity motion and pressure data logged every 1ms</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#0891b2]/10 flex items-center justify-center border border-[#0891b2]/20 mb-6">
+          <span class="material-symbols-outlined text-[#0891b2] text-3xl">psychology</span>
+        </div>
+        <h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-white">AI EVALUATES</h5>
+        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Neural networks compare actions against professional benchmarks</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-[#0891b2]/10 flex items-center justify-center border border-[#0891b2]/20 mb-6">
+          <span class="material-symbols-outlined text-[#0891b2] text-3xl">trending_up</span>
+        </div>
+        <h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-white">IMPROVE SKILLS</h5>
+        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Review heatmaps and data logs to reach mastery level</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Simetra -->
+  <section class="px-10 py-24 bg-white">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-20">
+      <div class="md:w-1/3">
+        <h2 class="text-5xl font-black font-['Space_Grotesk'] leading-tight mb-8 text-[#0f172a]">WHY<br/><span class="text-[#0891b2]">SIMETRA?</span></h2>
+        <p class="text-slate-500 font-['Inter'] leading-relaxed">Traditional surgical training is limited by physical resources and supervisor availability. SIMETRA breaks these barriers using neural-simulation.</p>
+      </div>
+      <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="space-y-4">
+          <div class="flex items-center gap-3"><div class="w-2 h-2 bg-[#0891b2]"></div><h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-[#0f172a]">Real-time tracking</h4></div>
+          <p class="text-sm text-slate-500 font-light">Sub-millimeter tracking accuracy for precise simulation of delicate procedures.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3"><div class="w-2 h-2 bg-[#0891b2]"></div><h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-[#0f172a]">AI feedback</h4></div>
+          <p class="text-sm text-slate-500 font-light">Immediate vocal and visual pointers during the procedure to correct technique.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3"><div class="w-2 h-2 bg-[#0891b2]"></div><h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-[#0f172a]">No hardware required</h4></div>
+          <p class="text-sm text-slate-500 font-light">Accessible via any standard browser. No expensive VR headsets needed.</p>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center gap-3"><div class="w-2 h-2 bg-[#0891b2]"></div><h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-[#0f172a]">Scalable</h4></div>
+          <p class="text-sm text-slate-500 font-light">Deploy to entire medical cohorts instantly with centralized progress tracking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="navy-section relative px-10 py-40 flex flex-col items-center overflow-hidden">
+    <div class="z-10 text-center space-y-12">
+      <h2 class="text-6xl font-black font-['Space_Grotesk'] uppercase tracking-tighter text-white">Ready to<br/>Operate?</h2>
+      <div class="flex flex-col items-center">
+        <a href="procedures.html" class="bg-[#0891b2] text-white px-16 py-6 font-['Space_Grotesk'] font-bold tracking-[0.3em] uppercase hover:shadow-xl hover:shadow-[#0891b2]/20 transition-all group inline-block">
+          Begin Procedure <span class="inline-block translate-x-2 group-hover:translate-x-4 transition-transform">→</span>
+        </a>
+        <p class="mt-6 font-['Space_Grotesk'] text-[10px] tracking-[0.2em] text-slate-400 uppercase">System Clearance: AUTHORIZED</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="w-full py-8 px-10 flex flex-col md:flex-row justify-between items-center bg-white border-t border-slate-200">
+    <div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 mb-4 md:mb-0">© 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED</div>
+    <div class="flex gap-8">
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SYSTEM_STATUS</a>
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SECURITY_ENCRYPTION</a>
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">PROTOCOL_v4.2</a>
+    </div>
+  </footer>
+</main>
+
+<script>
+// Cursor glow
+const glow = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// Nav scroll effect
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+// Background particles
+const pc = document.getElementById('bg-particles');
+const pctx = pc.getContext('2d');
+function resizePC() { pc.width = window.innerWidth; pc.height = window.innerHeight; }
+resizePC(); window.addEventListener('resize', resizePC);
+const pts = Array.from({length:80}, () => ({
+  x: Math.random()*pc.width, y: Math.random()*pc.height,
+  r: Math.random()*1.2+0.2, vx:(Math.random()-.5)*.25, vy:-Math.random()*.3-.05,
+  a: Math.random()*.4+.05
+}));
+function animPC() {
+  requestAnimationFrame(animPC);
+  pctx.clearRect(0,0,pc.width,pc.height);
+  pts.forEach(p => {
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.y<0){p.y=pc.height;p.x=Math.random()*pc.width;}
+    if(p.x<0||p.x>pc.width)p.vx*=-1;
+    pctx.beginPath(); pctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    pctx.fillStyle=`rgba(8,145,178,${p.a})`; pctx.fill();
+  });
+  // Draw connecting lines between nearby particles
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+    const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+    if(d<100){ pctx.strokeStyle=`rgba(8,145,178,${0.06*(1-d/100)})`; pctx.lineWidth=.5; pctx.beginPath(); pctx.moveTo(pts[i].x,pts[i].y); pctx.lineTo(pts[j].x,pts[j].y); pctx.stroke(); }
+  }
+}
+animPC();
+
+// Counter animation for stats
+function animateCount(el, target, suffix='') {
+  let cur = 0; const step = target/60;
+  const iv = setInterval(() => { cur = Math.min(cur+step, target); el.textContent = Math.round(cur)+suffix; if(cur>=target) clearInterval(iv); }, 20);
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.querySelectorAll('[data-count]').forEach(el => animateCount(el, +el.dataset.count, el.dataset.suffix||'')); obs.unobserve(e.target); } });
+}, {threshold:.3});
+document.querySelectorAll('[data-count-section]').forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

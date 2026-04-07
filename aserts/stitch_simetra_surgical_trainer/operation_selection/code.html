@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIMETRA | SELECT PROCEDURE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#005359",
+                    "on-secondary-fixed": "#403f3f",
+                    "on-surface-variant": "#adaaaa",
+                    "primary-fixed-dim": "#00deec",
+                    "primary-container": "#00eefc",
+                    "on-secondary-container": "#d3d0cf",
+                    "on-tertiary-container": "#000000",
+                    "secondary-container": "#474646",
+                    "tertiary-container": "#fc003b",
+                    "secondary-fixed": "#e5e2e1",
+                    "inverse-surface": "#fcf8f8",
+                    "on-error-container": "#ffa8a3",
+                    "surface-container-high": "#201f1f",
+                    "secondary-fixed-dim": "#d7d4d3",
+                    "surface-bright": "#2c2c2c",
+                    "surface": "#0e0e0e",
+                    "on-primary-fixed-variant": "#005e64",
+                    "primary-dim": "#00deec",
+                    "surface-container-lowest": "#000000",
+                    "primary": "#8ff5ff",
+                    "tertiary-fixed": "#ff9191",
+                    "tertiary-fixed-dim": "#ff7a7c",
+                    "on-secondary-fixed-variant": "#5c5b5b",
+                    "on-error": "#490006",
+                    "on-primary": "#005d63",
+                    "surface-container-low": "#131313",
+                    "surface-container-highest": "#262626",
+                    "on-background": "#ffffff",
+                    "background": "#0e0e0e",
+                    "on-tertiary-fixed": "#3a0006",
+                    "error": "#ff716c",
+                    "inverse-on-surface": "#565554",
+                    "outline-variant": "#494847",
+                    "on-tertiary": "#49000a",
+                    "outline": "#777575",
+                    "error-dim": "#d7383b",
+                    "on-tertiary-fixed-variant": "#790017",
+                    "on-primary-fixed": "#003f43",
+                    "inverse-primary": "#006a71",
+                    "surface-tint": "#8ff5ff",
+                    "error-container": "#9f0519",
+                    "secondary-dim": "#d7d4d3",
+                    "tertiary-dim": "#e90036",
+                    "on-secondary": "#525151",
+                    "secondary": "#e5e2e1",
+                    "surface-dim": "#0e0e0e",
+                    "primary-fixed": "#00eefc",
+                    "surface-container": "#1a1919",
+                    "tertiary": "#ff7073",
+                    "on-surface": "#ffffff",
+                    "surface-variant": "#262626"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary {
+            box-shadow: 0 0 15px rgba(143, 245, 255, 0.4);
+        }
+        .glass-panel {
+            background: rgba(143, 245, 255, 0.05);
+            backdrop-filter: blur(20px);
+        }
+        .pulse-border {
+            border: 1px solid #8ff5ff;
+            box-shadow: inset 0 0 10px rgba(143, 245, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-opacity-90 backdrop-blur-xl bg-[#0e0e0e] dark:bg-zinc-950 bg-gradient-to-b from-[#1a1919] to-transparent">
+<div class="text-2xl font-black tracking-tighter text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.6)] font-headline">
+            SIMETRA
+        </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1 shadow-[0_4px_10px_-2px_rgba(143,245,255,0.4)]" href="#">PROCEDURES</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-500 hover:text-zinc-300 transition-colors" href="#">SIMULATION</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-500 hover:text-zinc-300 transition-colors" href="#">RESOURCES</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-500 hover:text-zinc-300 transition-colors" href="#">EVALUATION</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[#8ff5ff] cursor-crosshair hover:bg-[#8ff5ff]/10 p-2" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-[#8ff5ff] cursor-crosshair hover:bg-[#8ff5ff]/10 p-2" data-icon="notifications_active">notifications_active</span>
+</div>
+<div class="px-3 py-1 bg-primary/20 border border-primary/40 text-[#8ff5ff] font-headline text-[10px] tracking-[0.2em]">
+                SYSTEM ACTIVE
+            </div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-[#1a1919] dark:bg-zinc-900 w-20 hover:w-64 transition-all duration-300 group shadow-[10px_0_30px_-15px_rgba(0,238,252,0.1)] overflow-hidden">
+<div class="px-6 mb-8 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-[#8ff5ff] font-headline font-bold text-sm tracking-widest">SURGEON_01</span>
+<span class="text-zinc-500 font-headline text-[10px] tracking-widest">RANK: ADVANCED</span>
+</div>
+<div class="flex flex-col flex-1 space-y-2">
+<div class="flex items-center h-12 text-zinc-600 grayscale hover:grayscale-0 hover:bg-zinc-800 transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="grid_view">grid_view</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap">DASHBOARD</span>
+</div>
+<div class="flex items-center h-12 bg-[#8ff5ff]/20 text-[#8ff5ff] border-r-4 border-[#8ff5ff] cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="psychology">psychology</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap">NEURAL_LINK</span>
+</div>
+<div class="flex items-center h-12 text-zinc-600 grayscale hover:grayscale-0 hover:bg-zinc-800 transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap">BIO_TELEMETRY</span>
+</div>
+<div class="flex items-center h-12 text-zinc-600 grayscale hover:grayscale-0 hover:bg-zinc-800 transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="database">database</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap">ARCHIVE</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col space-y-2">
+<div class="px-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-full py-3 bg-primary text-on-primary font-headline text-[10px] font-bold tracking-widest hover:brightness-110 active:scale-95 transition-all">
+                    INITIALIZE_SIM
+                </button>
+</div>
+<div class="flex items-center h-12 text-zinc-600 grayscale hover:grayscale-0 hover:bg-zinc-800 transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="power_settings_new">power_settings_new</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap">LOGOUT</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-20 pt-24 min-h-screen px-10 pb-20 bg-surface">
+<!-- Header Section -->
+<header class="max-w-7xl mx-auto mb-16 border-l-4 border-primary pl-8">
+<div class="flex items-center space-x-3 mb-2">
+<div class="h-2 w-2 bg-primary"></div>
+<span class="font-headline text-[10px] tracking-[0.4em] text-primary">DIRECTORY // OPS_V4.2</span>
+</div>
+<h1 class="font-headline text-5xl font-black text-primary tracking-tighter uppercase drop-shadow-[0_0_10px_rgba(143,245,255,0.3)]">
+                Select Procedure
+            </h1>
+<p class="text-zinc-500 font-body text-sm mt-4 max-w-xl">
+                Initialize high-fidelity surgical environments. Real-time biometric feedback enabled. Ensure neural link calibration before deployment.
+            </p>
+</header>
+<!-- Operation Selection Grid -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Main Option Card: Demo -->
+<div class="relative group cursor-crosshair">
+<div class="absolute -inset-[2px] bg-primary/20 opacity-100 group-hover:bg-primary/40 transition-all"></div>
+<div class="relative bg-surface-container h-full flex flex-col border border-primary pulse-border">
+<!-- Card Media -->
+<div class="h-48 overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Surgical feed" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-transform duration-700" data-alt="Close up of high-tech surgical robots performing precision chest operation under sterile cyan laboratory lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxqrF5JEKSgZPgZmvYzxMxm6DzDtFhaCrGA8qlTS_UXaMY19_QlYtu1ERHCBGYI-pFBSD81EL6Tn0-Yv1mqrA99b1BcZKHiA3sMz5y1uk7m_YYDrEh2mZxlwLw9fbaWbsW1vZLk-WZyL-SyZaSfngsDr17TaimcEr1bxh18IvecY9nTAlQXVGUocSkqTy_p9Z9U4uYch1sXYGEL8nqHKRGxlF0r3HQBbLcMia06Ld-VDDu39BeoN7KsSzm060RFzaiIyxAgXoY9-4"/>
+<div class="absolute top-4 right-4 bg-surface-container-highest px-3 py-1 text-[10px] font-headline tracking-widest text-primary border border-primary/30">
+                            DEMO_01
+                        </div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-80"></div>
+</div>
+<!-- Card Content -->
+<div class="p-8 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-headline text-xl font-bold leading-none tracking-tight text-on-surface">
+                                Chest Incision &amp;<br/>Heart Training <span class="text-primary/50 text-sm">(Demo)</span>
+</h2>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="vital_signs">vital_signs</span>
+</div>
+<!-- Data Modules -->
+<div class="space-y-4 mb-8">
+<div class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="font-headline text-[10px] text-zinc-500 tracking-widest">DURATION</span>
+<span class="font-headline text-[10px] text-on-surface tracking-widest">45:00 MIN</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/20 pb-2">
+<span class="font-headline text-[10px] text-zinc-500 tracking-widest">DIFFICULTY</span>
+<span class="font-headline text-[10px] text-primary tracking-widest">INTERMEDIATE</span>
+</div>
+<div class="flex justify-between">
+<span class="font-headline text-[10px] text-zinc-500 tracking-widest">STATUS</span>
+<div class="flex items-center space-x-2">
+<div class="h-1.5 w-1.5 bg-primary animate-pulse"></div>
+<span class="font-headline text-[10px] text-primary tracking-widest">READY</span>
+</div>
+</div>
+</div>
+<!-- Button -->
+<button class="mt-auto group/btn relative w-full py-4 bg-primary text-on-primary font-headline text-xs font-black tracking-[0.3em] overflow-hidden transition-all glow-primary hover:brightness-110 active:scale-95">
+<span class="relative z-10">START PROCEDURE</span>
+<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary-container to-primary opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Placeholder Cards for Grid Aesthetic -->
+<div class="relative group opacity-40 hover:opacity-60 transition-opacity">
+<div class="bg-surface-container h-full border border-outline-variant p-8 flex flex-col">
+<div class="flex justify-between mb-12">
+<span class="material-symbols-outlined text-zinc-600" data-icon="lock">lock</span>
+<span class="font-headline text-[10px] text-zinc-600 tracking-widest">LOCKED // RANK REQUIRED</span>
+</div>
+<h2 class="font-headline text-xl font-bold tracking-tight text-zinc-600 mb-8">NEURAL REPAIR<br/>LEVEL 2</h2>
+<div class="h-1 bg-zinc-800 w-full mt-auto"></div>
+</div>
+</div>
+<div class="relative group opacity-40 hover:opacity-60 transition-opacity">
+<div class="bg-surface-container h-full border border-outline-variant p-8 flex flex-col">
+<div class="flex justify-between mb-12">
+<span class="material-symbols-outlined text-zinc-600" data-icon="lock">lock</span>
+<span class="font-headline text-[10px] text-zinc-600 tracking-widest">LOCKED // ADVANCED</span>
+</div>
+<h2 class="font-headline text-xl font-bold tracking-tight text-zinc-600 mb-8">OCULAR<br/>RECONSTRUCTION</h2>
+<div class="h-1 bg-zinc-800 w-full mt-auto"></div>
+</div>
+</div>
+</div>
+<!-- System Telemetry Overlay (Aesthetic HUD) -->
+<div class="fixed bottom-12 right-10 flex flex-col items-end space-y-2 pointer-events-none">
+<div class="font-headline text-[8px] text-primary/40 tracking-[0.5em] uppercase">Telemetry Stream</div>
+<div class="flex space-x-1">
+<div class="h-8 w-1 bg-primary/20"></div>
+<div class="h-12 w-1 bg-primary/40"></div>
+<div class="h-6 w-1 bg-primary/20"></div>
+<div class="h-10 w-1 bg-primary"></div>
+<div class="h-4 w-1 bg-primary/20"></div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-4 px-10 flex justify-between items-center opacity-50 hover:opacity-100 transition-opacity bg-[#0e0e0e] border-t border-zinc-800/30">
+<div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-600">
+            © 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED
+        </div>
+<div class="flex space-x-8">
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-700 hover:text-zinc-400 transition-colors" href="#">SYSTEM_STATUS</a>
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-700 hover:text-zinc-400 transition-colors" href="#">SECURITY_ENCRYPTION</a>
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-700 hover:text-zinc-400 transition-colors" href="#">PROTOCOL_v4.2</a>
+</div>
+</footer>
+</body></html>

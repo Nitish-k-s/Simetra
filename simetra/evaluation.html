@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIMETRA | Performance Evaluation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#0891b2",
+          "on-primary": "#ffffff",
+          "surface": "#f8fafc",
+          "surface-container": "#f1f5f9",
+          "surface-container-high": "#e2e8f0",
+          "surface-container-highest": "#cbd5e1",
+          "surface-container-lowest": "#ffffff",
+          "on-surface": "#1e293b",
+          "on-surface-variant": "#475569",
+          "outline": "#94a3b8",
+          "outline-variant": "#cbd5e1",
+          "secondary": "#64748b",
+          "secondary-container": "#f1f5f9",
+          "secondary-dim": "#94a3b8",
+          "error": "#dc2626"
+        },
+        borderRadius: { "DEFAULT": "2px", "lg": "4px", "xl": "8px", "full": "9999px" },
+        fontFamily: { "headline": ["Space Grotesk"], "body": ["Inter"], "label": ["Space Grotesk"] }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { background-color: #f8fafc; color: #1e293b; font-family: 'Inter', sans-serif; }
+  .hud-bracket-tl { border-top: 2px solid #0891b2; border-left: 2px solid #0891b2; }
+  .hud-bracket-tr { border-top: 2px solid #0891b2; border-right: 2px solid #0891b2; }
+  .hud-bracket-bl { border-bottom: 2px solid #0891b2; border-left: 2px solid #0891b2; }
+  .hud-bracket-br { border-bottom: 2px solid #0891b2; border-right: 2px solid #0891b2; }
+  .cyan-glow { box-shadow: 0 0 20px rgba(8,145,178,0.08); }
+
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(8,145,178,0.01) 3px,rgba(8,145,178,0.01) 4px);pointer-events:none;z-index:9999}
+  #cursor-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,0.05) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:9998}
+  .bar-fill{transition:width 1.4s cubic-bezier(.4,0,.2,1)!important}
+  @keyframes score-in{0%{opacity:0;transform:scale(.5)}100%{opacity:1;transform:scale(1)}}
+  .score-animate{animation:score-in .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  @keyframes bracket-flash{0%,100%{opacity:.4}50%{opacity:1;box-shadow:0 0 8px rgba(8,145,178,.5)}}
+  .hud-bracket-tl,.hud-bracket-tr,.hud-bracket-bl,.hud-bracket-br{animation:bracket-flash 2.5s infinite}
+</style>
+</head>
+<body class="bg-[#f8fafc] overflow-x-hidden">
+
+<div id="cursor-glow"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200">
+  <div class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk']">SIMETRA</div>
+  <div class="hidden md:flex items-center space-x-8">
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="procedures.html">PROCEDURES</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="simulation.html">SIMULATION</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="#">RESOURCES</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-[#0891b2] border-b-2 border-[#0891b2] pb-1" href="#">EVALUATION</a>
+  </div>
+  <div class="flex items-center space-x-6">
+    <span class="material-symbols-outlined text-slate-400 hover:bg-[#0891b2]/10 hover:text-[#0891b2] cursor-pointer p-1 transition-all">notifications_active</span>
+    <span class="material-symbols-outlined text-slate-400 hover:bg-[#0891b2]/10 hover:text-[#0891b2] cursor-pointer p-1 transition-all">settings</span>
+    <div class="bg-[#0891b2]/10 px-3 py-1 border border-[#0891b2]/20">
+      <span class="font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold text-[#0891b2]">SYSTEM ACTIVE</span>
+    </div>
+  </div>
+</nav>
+
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-[#f1f5f9] w-20 hover:w-64 transition-all duration-300 border-r border-slate-200 group">
+  <div class="px-6 mb-10 overflow-hidden whitespace-nowrap">
+    <div class="font-['Space_Grotesk'] text-[10px] tracking-widest text-[#0891b2] font-bold">SURGEON_01</div>
+    <div class="font-['Space_Grotesk'] text-[8px] tracking-[0.2em] text-slate-400">RANK: ADVANCED</div>
+  </div>
+  <div class="flex-1 flex flex-col space-y-2">
+    <a class="flex items-center px-6 py-3 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="index.html">
+      <span class="material-symbols-outlined mr-4">grid_view</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">DASHBOARD</span>
+    </a>
+    <a class="flex items-center px-6 py-3 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="procedures.html">
+      <span class="material-symbols-outlined mr-4">psychology</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">NEURAL_LINK</span>
+    </a>
+    <a class="flex items-center px-6 py-3 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+      <span class="material-symbols-outlined mr-4">monitor_heart</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">BIO_TELEMETRY</span>
+    </a>
+    <a class="flex items-center px-6 py-3 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+      <span class="material-symbols-outlined mr-4">database</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">ARCHIVE</span>
+    </a>
+  </div>
+  <div class="mt-auto px-6 py-4">
+    <a class="flex items-center text-slate-400 hover:text-red-500 transition-all cursor-pointer py-3" href="index.html">
+      <span class="material-symbols-outlined mr-4">power_settings_new</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">LOGOUT</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="ml-20 pt-24 pb-12 px-10 min-h-screen">
+  <!-- Header -->
+  <div class="flex justify-between items-end mb-12 border-l-4 border-[#0891b2] pl-8">
+    <div>
+      <h2 class="font-['Space_Grotesk'] text-xs tracking-[0.4em] text-slate-400 mb-2">SYSTEM.OUTPUT_STREAM_v4.2</h2>
+      <h1 class="font-['Space_Grotesk'] text-5xl font-black tracking-tighter text-[#0891b2]">PERFORMANCE EVALUATION</h1>
+    </div>
+    <div class="text-right">
+      <div class="inline-block border border-[#0891b2]/20 px-6 py-2 bg-[#f1f5f9] relative">
+        <div class="absolute -top-1 -left-1 w-2 h-2 bg-[#0891b2]"></div>
+        <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-[#0891b2]"></div>
+        <span class="font-['Space_Grotesk'] text-xs tracking-widest text-[#0891b2] font-bold">RANK: ADVANCED SURGEON</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-8">
+    <!-- Left Column -->
+    <div class="col-span-12 lg:col-span-4 flex flex-col space-y-8">
+      <!-- Score Card -->
+      <div class="bg-white p-10 relative overflow-hidden group cyan-glow border border-slate-200">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+          <span class="material-symbols-outlined text-8xl text-[#0891b2]">analytics</span>
+        </div>
+        <h3 class="font-['Space_Grotesk'] text-[10px] tracking-[0.2em] text-slate-400 mb-6 uppercase">Composite Score</h3>
+        <div class="flex items-baseline space-x-2">
+          <span id="score-val" class="font-['Space_Grotesk'] text-8xl font-black text-[#0891b2] leading-none">87</span>
+          <span class="font-['Space_Grotesk'] text-2xl text-slate-300 font-light tracking-tighter">/100</span>
+        </div>
+        <div class="mt-8 h-1 w-full bg-slate-100 relative">
+          <div id="score-bar" class="absolute top-0 left-0 h-full bg-[#0891b2] w-[87%] shadow-[0_0_8px_rgba(8,145,178,0.3)]"></div>
+        </div>
+        <p class="mt-4 font-['Inter'] text-[10px] text-slate-400 tracking-wider">CALIBRATED AGAINST GLOBAL BENCHMARKS</p>
+      </div>
+
+      <!-- AI Feedback -->
+      <div class="bg-[#f1f5f9] p-8 relative border border-slate-200">
+        <div class="hud-bracket-tl absolute top-0 left-0 w-4 h-4"></div>
+        <div class="hud-bracket-tr absolute top-0 right-0 w-4 h-4"></div>
+        <div class="hud-bracket-bl absolute bottom-0 left-0 w-4 h-4"></div>
+        <div class="hud-bracket-br absolute bottom-0 right-0 w-4 h-4"></div>
+        <div class="flex items-center space-x-3 mb-6">
+          <span class="material-symbols-outlined text-[#0891b2] text-sm">psychology</span>
+          <h3 class="font-['Space_Grotesk'] text-[10px] tracking-[0.2em] text-[#0891b2] font-bold uppercase">AI_NEURAL_FEEDBACK</h3>
+        </div>
+        <p id="ai-feedback" class="font-['Inter'] text-sm leading-relaxed text-slate-600 font-medium">
+          "Your incision was <span class="text-red-500 font-bold">slightly inaccurate</span> and your response to bleeding was <span class="text-red-500 font-bold">delayed</span>. Focus on improving precision and reaction speed."
+        </p>
+        <div class="mt-6 flex justify-end">
+          <span class="font-['Space_Grotesk'] text-[8px] text-slate-300">KERNEL_REVISION: 1.0.8</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-span-12 lg:col-span-8 flex flex-col space-y-8">
+      <!-- Performance Bars -->
+      <div class="bg-white p-8 border border-slate-200">
+        <h3 class="font-['Space_Grotesk'] text-[10px] tracking-[0.2em] text-slate-400 mb-10">TELEMETRY_BREAKDOWN</h3>
+        <div class="space-y-12">
+          <div class="relative">
+            <div class="flex justify-between items-end mb-3">
+              <div class="flex items-center space-x-3">
+                <span class="font-['Space_Grotesk'] text-lg font-bold tracking-tight text-[#0f172a]">PRECISION</span>
+                <span class="bg-[#0891b2]/10 text-[#0891b2] text-[8px] px-2 py-0.5 font-bold tracking-tighter">HIGH</span>
+              </div>
+              <span class="font-['Space_Grotesk'] text-xs text-[#0891b2] font-bold">94.2%</span>
+            </div>
+            <div class="h-2 w-full bg-slate-100">
+              <div id="bar-precision" class="h-full bg-[#0891b2] w-[94%]"></div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="flex justify-between items-end mb-3">
+              <div class="flex items-center space-x-3">
+                <span class="font-['Space_Grotesk'] text-lg font-bold tracking-tight text-[#0f172a]">SPEED</span>
+                <span id="badge-speed" class="bg-slate-100 text-slate-500 text-[8px] px-2 py-0.5 font-bold tracking-tighter">MODERATE</span>
+              </div>
+              <span id="val-speed" class="font-['Space_Grotesk'] text-xs text-slate-500 font-bold">68.5%</span>
+            </div>
+            <div class="h-2 w-full bg-slate-100">
+              <div id="bar-speed" class="h-full bg-slate-400 w-[68%]"></div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="flex justify-between items-end mb-3">
+              <div class="flex items-center space-x-3">
+                <span class="font-['Space_Grotesk'] text-lg font-bold tracking-tight text-[#0f172a]">ACCURACY</span>
+                <span id="badge-acc" class="bg-[#0891b2]/10 text-[#0891b2] text-[8px] px-2 py-0.5 font-bold tracking-tighter">HIGH</span>
+              </div>
+              <span id="val-acc" class="font-['Space_Grotesk'] text-xs text-[#0891b2] font-bold">91.0%</span>
+            </div>
+            <div class="h-2 w-full bg-slate-100">
+              <div id="bar-accuracy" class="h-full bg-[#0891b2] w-[91%]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Replay Panels -->
+      <div class="grid grid-cols-2 gap-8">
+        <div class="bg-slate-100 aspect-video relative group overflow-hidden border border-slate-200 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#0891b2]/30 text-6xl">play_circle</span>
+          <div class="absolute top-4 left-4 flex items-center space-x-2">
+            <div class="w-1.5 h-1.5 bg-[#0891b2] animate-pulse"></div>
+            <span class="font-['Space_Grotesk'] text-[8px] tracking-widest text-[#0891b2] font-bold uppercase">Replay_Stream_A</span>
+          </div>
+        </div>
+        <div class="bg-slate-100 aspect-video relative group overflow-hidden border border-slate-200 flex items-center justify-center">
+          <span class="material-symbols-outlined text-red-300 text-6xl">error</span>
+          <div class="absolute top-4 left-4 flex items-center space-x-2">
+            <div class="w-1.5 h-1.5 bg-red-500"></div>
+            <span class="font-['Space_Grotesk'] text-[8px] tracking-widest text-red-500 font-bold uppercase">ERROR_ZONE_DELTA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action CTAs -->
+  <div class="mt-16 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+    <a href="simulation.html" class="w-full md:w-auto bg-[#0891b2] text-white font-['Space_Grotesk'] font-bold text-xs tracking-[0.2em] px-12 py-5 shadow-lg hover:shadow-xl hover:brightness-110 transition-all active:scale-95 uppercase flex items-center justify-center space-x-3">
+      <span class="material-symbols-outlined text-sm">refresh</span>
+      <span>Retry Procedure</span>
+    </a>
+    <a href="procedures.html" class="w-full md:w-auto border border-[#0891b2]/30 text-[#0891b2] font-['Space_Grotesk'] font-bold text-xs tracking-[0.2em] px-12 py-5 hover:bg-[#0891b2]/5 transition-all active:scale-95 uppercase flex items-center justify-center space-x-3">
+      <span class="material-symbols-outlined text-sm">query_stats</span>
+      <span>Back to Procedures</span>
+    </a>
+  </div>
+</main>
+
+<footer class="w-full py-4 px-10 flex justify-between items-center opacity-60 hover:opacity-100 transition-opacity bg-[#f1f5f9] border-t border-slate-200">
+  <div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400">© 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED</div>
+  <div class="flex space-x-8">
+    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2]" href="#">SYSTEM_STATUS</a>
+    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2]" href="#">SECURITY_ENCRYPTION</a>
+    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2]" href="#">PROTOCOL_v4.2</a>
+  </div>
+</footer>
+<script>
+const g = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; });
+
+// Load real sim results from sessionStorage
+const raw = sessionStorage.getItem('simResults');
+if (raw) {
+  try {
+    const d = JSON.parse(raw);
+    const score = d.accuracy || 87;
+    const incStep = d.steps.find(s => s.step === 'incision');
+    const ablStep = d.steps.find(s => s.step === 'ablation');
+    const precVal = incStep ? incStep.accuracy : 94;
+    const ablVal  = ablStep ? ablStep.accuracy : 91;
+    const speedVal = Math.max(30, 100 - Math.round(d.time / 2));
+
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('score-bar').style.width = score + '%';
+    document.getElementById('bar-precision').style.width = precVal + '%';
+    document.getElementById('bar-accuracy').style.width = ablVal + '%';
+    document.getElementById('bar-speed').style.width = speedVal + '%';
+    document.getElementById('val-speed').textContent = speedVal + '%';
+    document.getElementById('val-acc').textContent = ablVal + '%';
+
+    if (d.mistakes > 0) {
+      document.getElementById('ai-feedback').innerHTML =
+        `"${d.mistakes} mistake${d.mistakes > 1 ? 's' : ''} recorded during the procedure. ` +
+        `Focus on incision accuracy and targeting the correct ablation node."`;
+    }
+  } catch(e) {}
+}
+
+// Animate bars from 0 on load
+setTimeout(() => {
+  ['score-bar','bar-precision','bar-speed','bar-accuracy'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const target = el.style.width;
+    el.style.width = '0';
+    el.style.transition = 'width 1.4s cubic-bezier(.4,0,.2,1)';
+    setTimeout(() => el.style.width = target, 80);
+  });
+  // Score count-up
+  const sv = document.getElementById('score-val');
+  if (sv) {
+    const target = parseInt(sv.textContent) || 87;
+    sv.textContent = '0';
+    let c = 0;
+    const iv = setInterval(() => {
+      c = Math.min(c + 2, target);
+      sv.textContent = c;
+      if (c >= target) clearInterval(iv);
+    }, 18);
+  }
+}, 300);
+</script>
+</body></html>

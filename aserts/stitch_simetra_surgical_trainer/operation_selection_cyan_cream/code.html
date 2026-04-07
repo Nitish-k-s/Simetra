@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIMETRA | SELECT PROCEDURE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "background": "#FDFCF8",
+                "surface": "#FDFCF8",
+                "on-surface": "#1A1C1E",
+                "primary": "#00CED1",
+                "on-primary": "#FFFFFF",
+                "secondary": "#E0E2E2",
+                "outline": "#C4C7C7",
+                "surface-variant": "#F2F1EC",
+                "on-surface-variant": "#444748"
+            },
+            "borderRadius": {
+                "DEFAULT": "0px",
+                "lg": "0px",
+                "xl": "0px",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary-subtle {
+            box-shadow: 0 4px 20px rgba(0, 206, 209, 0.15);
+        }
+        .clinical-panel {
+            background: #FFFFFF;
+            border: 1px solid #E0E2E2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .accent-border {
+            border-left: 4px solid #00CED1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/20">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-white/80 backdrop-blur-xl border-b border-outline/30">
+<div class="text-2xl font-black tracking-tighter text-primary font-headline">
+        SIMETRA
+    </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-headline tracking-widest uppercase text-xs font-bold text-primary border-b-2 border-primary pb-1" href="#">PROCEDURES</a>
+<a class="font-headline tracking-widest uppercase text-xs font-bold text-on-surface-variant/60 hover:text-primary transition-colors" href="#">SIMULATION</a>
+<a class="font-headline tracking-widest uppercase text-xs font-bold text-on-surface-variant/60 hover:text-primary transition-colors" href="#">RESOURCES</a>
+<a class="font-headline tracking-widest uppercase text-xs font-bold text-on-surface-variant/60 hover:text-primary transition-colors" href="#">EVALUATION</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-on-surface-variant/70 cursor-pointer hover:text-primary p-2" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant/70 cursor-pointer hover:text-primary p-2" data-icon="notifications">notifications</span>
+</div>
+<div class="px-3 py-1 bg-primary/10 border border-primary/30 text-primary font-headline text-[10px] tracking-[0.2em] font-bold">
+            SYSTEM ACTIVE
+        </div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-white border-r border-outline/30 w-20 hover:w-64 transition-all duration-300 group overflow-hidden">
+<div class="px-6 mb-8 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="text-on-surface font-headline font-bold text-sm tracking-widest">SURGEON_01</span>
+<span class="text-on-surface-variant/60 font-headline text-[10px] tracking-widest uppercase">Rank: Advanced</span>
+</div>
+<div class="flex flex-col flex-1 space-y-2">
+<div class="flex items-center h-12 text-on-surface-variant/40 hover:text-primary hover:bg-surface-variant transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="grid_view">grid_view</span>
+<span class="font-headline text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap font-bold">DASHBOARD</span>
+</div>
+<div class="flex items-center h-12 bg-primary/10 text-primary border-r-4 border-primary cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="psychology">psychology</span>
+<span class="font-headline text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap font-bold">NEURAL_LINK</span>
+</div>
+<div class="flex items-center h-12 text-on-surface-variant/40 hover:text-primary hover:bg-surface-variant transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="monitor_heart">monitor_heart</span>
+<span class="font-headline text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap font-bold">BIO_TELEMETRY</span>
+</div>
+<div class="flex items-center h-12 text-on-surface-variant/40 hover:text-primary hover:bg-surface-variant transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="database">database</span>
+<span class="font-headline text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap font-bold">ARCHIVE</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col space-y-2">
+<div class="px-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-full py-3 bg-primary text-white font-headline text-[10px] font-bold tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-sm">
+                INITIALIZE_SIM
+            </button>
+</div>
+<div class="flex items-center h-12 text-on-surface-variant/40 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer">
+<span class="material-symbols-outlined min-w-[80px] text-center" data-icon="power_settings_new">power_settings_new</span>
+<span class="font-headline text-[10px] tracking-widest opacity-0 group-hover:opacity-100 whitespace-nowrap font-bold">LOGOUT</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-20 pt-24 min-h-screen px-10 pb-20">
+<!-- Header Section -->
+<header class="max-w-7xl mx-auto mb-16 accent-border pl-8">
+<div class="flex items-center space-x-3 mb-2">
+<div class="h-2 w-2 bg-primary"></div>
+<span class="font-headline text-[10px] tracking-[0.4em] text-primary font-bold">DIRECTORY // OPS_V4.2</span>
+</div>
+<h1 class="font-headline text-5xl font-black text-on-surface tracking-tighter uppercase">
+            Select Procedure
+        </h1>
+<p class="text-on-surface-variant/70 font-body text-sm mt-4 max-w-xl leading-relaxed">
+            Initialize high-fidelity surgical environments. Real-time biometric feedback enabled. Ensure neural link calibration before deployment.
+        </p>
+</header>
+<!-- Operation Selection Grid -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Main Option Card: Demo -->
+<div class="relative group cursor-pointer">
+<div class="absolute -inset-[1px] bg-primary/20 opacity-0 group-hover:opacity-100 transition-all"></div>
+<div class="relative clinical-panel h-full flex flex-col overflow-hidden transition-all group-hover:shadow-lg">
+<!-- Card Media -->
+<div class="h-48 overflow-hidden relative">
+<img alt="Surgical feed" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxqrF5JEKSgZPgZmvYzxMxm6DzDtFhaCrGA8qlTS_UXaMY19_QlYtu1ERHCBGYI-pFBSD81EL6Tn0-Yv1mqrA99b1BcZKHiA3sMz5y1uk7m_YYDrEh2mZxlwLw9fbaWbsW1vZLk-WZyL-SyZaSfngsDr17TaimcEr1bxh18IvecY9nTAlQXVGUocSkqTy_p9Z9U4uYch1sXYGEL8nqHKRGxlF0r3HQBbLcMia06Ld-VDDu39BeoN7KsSzm060RFzaiIyxAgXoY9-4"/>
+<div class="absolute top-4 right-4 bg-white/90 px-3 py-1 text-[10px] font-headline tracking-widest text-primary border border-primary/20 font-bold backdrop-blur-sm">
+                        DEMO_01
+                    </div>
+</div>
+<!-- Card Content -->
+<div class="p-8 flex-1 flex flex-col bg-white">
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-headline text-xl font-bold leading-tight tracking-tight text-on-surface">
+                            Chest Incision &amp;<br/>Heart Training <span class="text-primary text-sm font-medium">(Demo)</span>
+</h2>
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="vital_signs">vital_signs</span>
+</div>
+<!-- Data Modules -->
+<div class="space-y-4 mb-8">
+<div class="flex justify-between border-b border-outline/20 pb-2">
+<span class="font-headline text-[10px] text-on-surface-variant/50 tracking-widest font-bold">DURATION</span>
+<span class="font-headline text-[10px] text-on-surface tracking-widest font-bold">45:00 MIN</span>
+</div>
+<div class="flex justify-between border-b border-outline/20 pb-2">
+<span class="font-headline text-[10px] text-on-surface-variant/50 tracking-widest font-bold">DIFFICULTY</span>
+<span class="font-headline text-[10px] text-primary tracking-widest font-bold uppercase">Intermediate</span>
+</div>
+<div class="flex justify-between">
+<span class="font-headline text-[10px] text-on-surface-variant/50 tracking-widest font-bold">STATUS</span>
+<div class="flex items-center space-x-2">
+<div class="h-1.5 w-1.5 bg-primary rounded-full animate-pulse"></div>
+<span class="font-headline text-[10px] text-primary tracking-widest font-bold">READY</span>
+</div>
+</div>
+</div>
+<!-- Button -->
+<button class="mt-auto relative w-full py-4 bg-primary text-white font-headline text-xs font-black tracking-[0.3em] transition-all hover:brightness-110 active:scale-95 shadow-md">
+                        START PROCEDURE
+                    </button>
+</div>
+</div>
+</div>
+<!-- Locked Card 1 -->
+<div class="relative group">
+<div class="clinical-panel h-full p-8 flex flex-col bg-surface-variant/40 border-dashed opacity-70">
+<div class="flex justify-between mb-12">
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="lock">lock</span>
+<span class="font-headline text-[10px] text-on-surface-variant/40 tracking-widest font-bold">LOCKED // RANK REQUIRED</span>
+</div>
+<h2 class="font-headline text-xl font-bold tracking-tight text-on-surface-variant/40 mb-8 uppercase">Neural Repair<br/>Level 2</h2>
+<div class="h-1 bg-outline/20 w-full mt-auto"></div>
+</div>
+</div>
+<!-- Locked Card 2 -->
+<div class="relative group">
+<div class="clinical-panel h-full p-8 flex flex-col bg-surface-variant/40 border-dashed opacity-70">
+<div class="flex justify-between mb-12">
+<span class="material-symbols-outlined text-on-surface-variant/40" data-icon="lock">lock</span>
+<span class="font-headline text-[10px] text-on-surface-variant/40 tracking-widest font-bold">LOCKED // ADVANCED</span>
+</div>
+<h2 class="font-headline text-xl font-bold tracking-tight text-on-surface-variant/40 mb-8 uppercase">Ocular<br/>Reconstruction</h2>
+<div class="h-1 bg-outline/20 w-full mt-auto"></div>
+</div>
+</div>
+</div>
+<!-- System Telemetry Overlay -->
+<div class="fixed bottom-12 right-10 flex flex-col items-end space-y-2 pointer-events-none opacity-60">
+<div class="font-headline text-[8px] text-primary tracking-[0.5em] uppercase font-bold">Telemetry Stream</div>
+<div class="flex space-x-1">
+<div class="h-8 w-1 bg-primary/20"></div>
+<div class="h-12 w-1 bg-primary/40"></div>
+<div class="h-6 w-1 bg-primary/20"></div>
+<div class="h-10 w-1 bg-primary"></div>
+<div class="h-4 w-1 bg-primary/20"></div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-6 px-10 flex justify-between items-center bg-white border-t border-outline/20">
+<div class="font-body text-[9px] tracking-[0.2em] uppercase text-on-surface-variant/50 font-medium">
+        © 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED
+    </div>
+<div class="flex space-x-8">
+<a class="font-body text-[9px] tracking-[0.2em] uppercase text-on-surface-variant/40 hover:text-primary transition-colors font-bold" href="#">System_Status</a>
+<a class="font-body text-[9px] tracking-[0.2em] uppercase text-on-surface-variant/40 hover:text-primary transition-colors font-bold" href="#">Security_Encryption</a>
+<a class="font-body text-[9px] tracking-[0.2em] uppercase text-on-surface-variant/40 hover:text-primary transition-colors font-bold" href="#">Protocol_V4.2</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIMETRA | Precision Surgical Training</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#565e74",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "surface-tint": "#006780",
+                        "surface-variant": "#e0e3e5",
+                        "primary-container": "#007f9d",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "surface": "#ffffff",
+                        "outline-variant": "#e2e8f0",
+                        "surface-container": "#eceef0",
+                        "on-background": "#0f172a",
+                        "on-primary-fixed-variant": "#004e61",
+                        "primary": "#0891b2",
+                        "on-primary-container": "#fafdff",
+                        "on-surface": "#0f172a",
+                        "secondary-container": "#dae2fd",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-bright": "#ffffff",
+                        "tertiary-container": "#a86516",
+                        "primary-fixed": "#b7eaff",
+                        "on-tertiary-container": "#fffbff",
+                        "inverse-primary": "#6cd3f7",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface-variant": "#3e484d",
+                        "error-container": "#ffdad6",
+                        "outline": "#6e797e",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001f28",
+                        "on-tertiary-fixed": "#2d1600",
+                        "tertiary": "#894e00",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#6a3b00",
+                        "on-secondary-container": "#5c647a",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f8fafc",
+                        "surface-container-high": "#e6e8ea",
+                        "background": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#dae2fd",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdcbf",
+                        "tertiary-fixed-dim": "#ffb873",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#6cd3f7",
+                        "dark-navy": "#0f172a",
+                        "muted-navy": "#94a3b8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0f172a; }
+        h1, h2, h3, .font-headline { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-white">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white border-b border-[#e2e8f0] shadow-sm transition-all duration-200 ease-in-out flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-[#0891b2] font-headline">SIMETRA</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-[#0891b2] font-semibold border-b-2 border-[#0891b2] pb-1 font-headline tracking-tight" href="#">Modules</a>
+<a class="text-slate-500 hover:text-[#0891b2] transition-colors font-headline tracking-tight" href="#">Library</a>
+<a class="text-slate-500 hover:text-[#0891b2] transition-colors font-headline tracking-tight" href="#">Simulations</a>
+<a class="text-slate-500 hover:text-[#0891b2] transition-colors font-headline tracking-tight" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-50 border-none rounded-full py-1.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#0891b2] w-64" placeholder="Search procedures..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-slate-500 hover:bg-slate-50 p-2 rounded-full transition-all">notifications</button>
+<button class="material-symbols-outlined text-slate-500 hover:bg-slate-50 p-2 rounded-full transition-all">settings</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Surgeon Profile Avatar" class="w-full h-full object-cover" data-alt="professional headshot of a surgeon in blue scrubs with a focused and confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiRFIrCAIFuF-le32VKgBvxTeg1d3_iZ6DZ1tnQfFe3tINlhf9Yz3OMWhrVx9zpBgedNjkgg6bp3T7wiUENN89SOtE0iZ4Ss620gOqTE_yp50kkafAsIAZ09Z9b0gq9PPhURQlWXBCUS7pajZE59u-QTOYV6kcmn9InTrYW3GnySqFxDqUdwnNObvXrjcoDlQIfSRW3_drg3nCN2XBN0Vz5wDhPkg_jSYPHzYc_zHwpAHMu1GOVsG4MQq5xijaCQ3KZfr8Vx0yMi0"/>
+</div>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="bg-white py-24 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-[#0891b2]/10 text-[#0891b2] rounded-full text-xs font-bold tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">verified</span>
+                    Precision Training Platform
+                </div>
+<h1 class="text-6xl font-bold tracking-tighter leading-tight text-[#0f172a]">
+                    Master the Operating Room <span class="text-[#0891b2]">Virtually.</span>
+</h1>
+<p class="text-lg text-slate-600 leading-relaxed max-w-xl">
+                    High-fidelity surgical simulations powered by advanced haptics and real-time clinical feedback. SIMETRA bridges the gap between theory and the scalpel.
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="px-8 py-4 bg-[#0891b2] text-white rounded-xl font-bold text-lg hover:brightness-110 transition-all flex items-center gap-2">
+                        START TRAINING
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="px-8 py-4 border-2 border-[#0891b2] text-[#0891b2] rounded-xl font-bold text-lg hover:bg-[#0891b2]/5 transition-all">
+                        VIEW SANDBOX
+                    </button>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -inset-4 bg-slate-100 rounded-[2rem] -rotate-2"></div>
+<div class="relative bg-white p-4 rounded-[2rem] shadow-2xl border border-slate-100">
+<img alt="Surgical Simulation" class="rounded-xl w-full" data-alt="close up of a high-tech medical simulation screen showing 3d heart model with surgical tools in a sterile lab setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC_ifPAFzcT5UdaNLwlaOupqiv6CVvZWs0zCZ0Hsc6SGXfR6akeslBGmQNdIgpg5zqRoHEXqyusIzsEJRy5oJUL0qcIOqpyZiHl4FW70cdQkbn4fY5UGXmK3Fx-54eDHekQVfpQGuDHPnwcmiVH1J70kfbu5Hseyf_k2_FFCsrIG6fWY8MSN0JBd-7kbTMfhdUU422Isqosn20-aHlmR7bTB3y8idhAuYIrIl70LGTMGBv2ZP77uW58KCULTo3r6Fj-30LIzMPqCQ"/>
+</div>
+</div>
+</section>
+<!-- Why SIMETRA Section -->
+<section class="bg-white py-24 px-8 border-t border-[#e2e8f0]">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 space-y-4">
+<h2 class="text-4xl font-bold text-[#0f172a]">Why SIMETRA?</h2>
+<p class="text-slate-500 max-w-2xl mx-auto">Engineered by surgeons, for surgeons. Our methodology prioritizes clinical accuracy over gamification.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="bg-[#f8fafc] border border-[#e2e8f0] p-10 rounded-2xl space-y-6">
+<div class="w-12 h-12 bg-[#0891b2]/10 rounded-xl flex items-center justify-center text-[#0891b2]">
+<span class="material-symbols-outlined text-3xl">precision_manufacturing</span>
+</div>
+<h3 class="text-xl font-bold text-[#0f172a]">Haptic Feedback</h3>
+<p class="text-slate-600 leading-relaxed">Proprietary tissue resistance algorithms that simulate real anatomical density and tactile response.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-[#f8fafc] border border-[#e2e8f0] p-10 rounded-2xl space-y-6">
+<div class="w-12 h-12 bg-[#0891b2]/10 rounded-xl flex items-center justify-center text-[#0891b2]">
+<span class="material-symbols-outlined text-3xl">monitoring</span>
+</div>
+<h3 class="text-xl font-bold text-[#0f172a]">Live Analytics</h3>
+<p class="text-slate-600 leading-relaxed">Instant telemetry on hand stability, incision depth, and time-to-completion metrics for every session.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-[#f8fafc] border border-[#e2e8f0] p-10 rounded-2xl space-y-6">
+<div class="w-12 h-12 bg-[#0891b2]/10 rounded-xl flex items-center justify-center text-[#0891b2]">
+<span class="material-symbols-outlined text-3xl">medical_information</span>
+</div>
+<h3 class="text-xl font-bold text-[#0f172a]">Modular Library</h3>
+<p class="text-slate-600 leading-relaxed">Over 400 procedural scenarios from basic suturing to complex robotic-assisted laparoscopy.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow/Method Section -->
+<section class="bg-[#0f172a] py-24 px-8 text-white">
+<div class="max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-2 gap-20 items-center">
+<div>
+<h2 class="text-4xl font-bold mb-12 tracking-tight">The SIMETRA Protocol</h2>
+<div class="space-y-12">
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-8 h-8 rounded-full border border-[#0891b2] text-[#0891b2] flex items-center justify-center font-bold">1</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Perform Action</h4>
+<p class="text-[#94a3b8]">Execute complex surgical maneuvers in a zero-risk virtual theater using calibrated instruments.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-8 h-8 rounded-full border border-[#0891b2] text-[#0891b2] flex items-center justify-center font-bold">2</div>
+<div>
+<h4 class="text-xl font-bold mb-2">System Tracks</h4>
+<p class="text-[#94a3b8]">Underlying engine monitors every micron of movement, force application, and anatomical interaction.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-8 h-8 rounded-full border border-[#0891b2] text-[#0891b2] flex items-center justify-center font-bold">3</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Refine Skills</h4>
+<p class="text-[#94a3b8]">Review heatmaps of your performance and compare against gold-standard professional benchmarks.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative aspect-square">
+<div class="absolute inset-0 bg-gradient-to-tr from-[#0891b2]/20 to-transparent rounded-full blur-3xl"></div>
+<img alt="Laboratory Analysis" class="relative z-10 w-full h-full object-cover rounded-3xl opacity-80 border border-slate-700" data-alt="modern medical lab with monitors showing data visualizations and microscopic biological structures in cool blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-jH_YDekMTaY2vXNueNW1LGCa1M7jQ30g07byadsCJvY-exXmEpaqBC4tBz_tstXE38FGDI3jMhwqn-nuwcC0Tl3FpFCoBbV2CaGbJk9iKCVci80QjVPhHaQMrZovwzkPg7bzbJdbWeZ6-Jts9q4ChDJTzchpLhdYvV4xq1QbjAI_ftz860wcmsQm0PpHIo0HtUzJnOqhgg6ryFTHVuLvIIsOWbcuaZXzQWJ1-RU-vRXe_zFKdtc7Uo0No__SeUxMs4jr9KIEFG0"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="bg-white py-24 px-8 border-t border-[#e2e8f0]">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+<div>
+<span class="text-[#0891b2] text-5xl font-bold font-headline">98%</span>
+<p class="text-slate-500 font-medium mt-2">Procedure Accuracy</p>
+</div>
+<div class="w-px h-16 bg-[#e2e8f0] hidden md:block"></div>
+<div>
+<span class="text-[#0891b2] text-5xl font-bold font-headline">12k+</span>
+<p class="text-slate-500 font-medium mt-2">Active Surgeons</p>
+</div>
+<div class="w-px h-16 bg-[#e2e8f0] hidden md:block"></div>
+<div>
+<span class="text-[#0891b2] text-5xl font-bold font-headline">400+</span>
+<p class="text-slate-500 font-medium mt-2">Training Modules</p>
+</div>
+<div class="w-px h-16 bg-[#e2e8f0] hidden md:block"></div>
+<div>
+<span class="text-[#0891b2] text-5xl font-bold font-headline">15</span>
+<p class="text-slate-500 font-medium mt-2">Global Centers</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-900 w-full py-12 flex flex-col items-center justify-center gap-6 px-8">
+<div class="flex items-center gap-8 mb-4">
+<span class="text-white font-bold text-2xl font-headline tracking-tighter">SIMETRA</span>
+</div>
+<div class="flex flex-wrap justify-center gap-10">
+<a class="text-slate-400 hover:text-[#0891b2] transition-colors text-xs tracking-wide font-body" href="#">Privacy Policy</a>
+<a class="text-slate-400 hover:text-[#0891b2] transition-colors text-xs tracking-wide font-body" href="#">Terms of Service</a>
+<a class="text-slate-400 hover:text-[#0891b2] transition-colors text-xs tracking-wide font-body" href="#">Compliance</a>
+<a class="text-slate-400 hover:text-[#0891b2] transition-colors text-xs tracking-wide font-body" href="#">Contact</a>
+</div>
+<p class="text-slate-400 text-xs tracking-wide font-body mt-4">
+            © 2024 SIMETRA Surgical. Clinical Precision Guaranteed.
+        </p>
+</footer>
+</body></html>

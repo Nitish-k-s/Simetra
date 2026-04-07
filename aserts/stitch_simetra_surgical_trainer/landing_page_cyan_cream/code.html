@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00CED1",
+                        "on-primary": "#FFFFFF",
+                        "background": "#FDFCF8",
+                        "surface": "#F7F5F0",
+                        "surface-container": "#F1EFE9",
+                        "surface-container-high": "#EBE9E3",
+                        "on-background": "#1A1A1A",
+                        "on-surface": "#2D2D2D",
+                        "outline": "#D1CFCA",
+                        "tertiary": "#FF4D6D"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #FDFCF8;
+            color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .hud-grid {
+            background-image: radial-gradient(circle at 1px 1px, rgba(0, 206, 209, 0.1) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 206, 209, 0.1);
+        }
+        .active-nav-shadow {
+            box-shadow: 0 4px 10px -2px rgba(0, 206, 209, 0.2);
+        }
+        .scan-line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #00CED1, transparent);
+            position: absolute;
+            top: 0;
+            animation: scan 6s linear infinite;
+            opacity: 0.2;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body class="hud-grid">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-[#FDFCF8]/90 backdrop-blur-xl border-b border-outline/30">
+<div class="text-2xl font-black tracking-tighter text-primary font-['Space_Grotesk']">
+        SIMETRA
+    </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-primary border-b-2 border-primary pb-1 active-nav-shadow" href="#">PROCEDURES</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-400 hover:text-primary transition-colors" href="#">SIMULATION</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-400 hover:text-primary transition-colors" href="#">RESOURCES</a>
+<a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-zinc-400 hover:text-primary transition-colors" href="#">EVALUATION</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 text-primary">
+<span class="material-symbols-outlined cursor-crosshair hover:bg-primary/10 p-1">settings</span>
+<span class="material-symbols-outlined cursor-crosshair hover:bg-primary/10 p-1">notifications_active</span>
+</div>
+<div class="font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold px-3 py-1 border border-primary/30 text-primary bg-primary/5">
+            SYSTEM ACTIVE
+        </div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-surface border-r border-outline/30 w-20 hover:w-64 transition-all duration-300 group overflow-hidden">
+<div class="px-6 mb-10 flex items-center gap-4">
+<div class="w-8 h-8 bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<p class="font-['Space_Grotesk'] text-[10px] font-bold text-primary">SURGEON_01</p>
+<p class="font-['Space_Grotesk'] text-[8px] text-zinc-400 uppercase">RANK: ADVANCED</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-4 px-6 py-4 bg-primary/10 text-primary border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">DASHBOARD</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-zinc-400 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">NEURAL_LINK</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-zinc-400 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">BIO_TELEMETRY</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-zinc-400 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">ARCHIVE</span>
+</a>
+</div>
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary text-white py-3 font-['Space_Grotesk'] text-[10px] font-bold tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            INITIALIZE_SIM
+        </button>
+</div>
+</aside>
+<main class="ml-20 pt-24 min-h-screen">
+<!-- Hero Section -->
+<section class="relative px-10 py-20 flex flex-col items-center justify-center min-h-[80vh] text-center">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
+<div class="max-w-4xl z-10">
+<h1 class="text-7xl md:text-9xl font-black tracking-tighter text-primary mb-6 font-['Space_Grotesk'] uppercase">
+                SIMETRA
+            </h1>
+<p class="text-xl md:text-2xl text-zinc-500 font-['Inter'] font-light tracking-wide max-w-2xl mx-auto mb-10 border-l-2 border-primary/30 pl-6 text-left">
+                Practice surgical procedures with <span class="text-primary font-medium">real-time AI evaluation</span>—directly in your browser.
+            </p>
+<div class="flex flex-col md:flex-row gap-6 justify-center">
+<button class="bg-primary text-white px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20 flex items-center gap-3">
+                    Start Training
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="border border-primary/40 text-primary px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:bg-primary/5 transition-colors">
+                    View Sandbox
+                </button>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 flex flex-col items-center gap-2">
+<span class="text-[8px] font-['Space_Grotesk'] tracking-[0.5em] text-zinc-400">INITIATE_DESCENT</span>
+<div class="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"></div>
+</div>
+</section>
+<!-- Demo Preview Section -->
+<section class="px-10 py-32 bg-surface">
+<div class="mb-16">
+<h2 class="text-[10px] font-['Space_Grotesk'] tracking-[0.3em] text-primary mb-2 uppercase">Interface Preview</h2>
+<h3 class="text-4xl font-bold font-['Space_Grotesk'] text-on-background">SIMULATION ENVIRONMENT</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<div class="md:col-span-8 bg-background relative border border-outline/30 overflow-hidden group">
+<div class="scan-line"></div>
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply group-hover:opacity-100 transition-all duration-700" data-alt="high-tech surgical simulation screen showing a 3D medical heart model with digital pulse monitors and neon cyan UI overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTIYIUrq8N9kUtfxAXOo-yVSgPWc3mNPAjuRtrOohVyflibDBjFWnnGqKzztrYLjkV5SvrLDKwNBroS4rvgKZ5-d7lLnvYGXQCChFN7IXlV4gKw8gIBsRVWa6W1fey9-uv8xvf5hr6kiETroREc-1vZ2ZZROlm5h0qh1Qy5UAQMqOiv6-aaSf4wYq52dHy6eE3JAFx7QvrZ_lMn-Cv3GMBr6GUBWbS6cJ83SLkWgwsZxTRasb5qTN-KYXNDQU6YVnienGJqpVtvXU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
+<div class="absolute top-6 right-6 flex flex-col gap-2">
+<div class="bg-white/80 backdrop-blur-md border border-primary/20 p-4 font-['Space_Grotesk'] text-[10px]">
+<p class="text-primary tracking-widest font-bold">HEART_RATE: 72 BPM</p>
+<p class="text-primary tracking-widest font-bold">OXYGEN: 98%</p>
+</div>
+</div>
+<div class="absolute bottom-8 left-8">
+<span class="text-primary font-['Space_Grotesk'] text-xs tracking-widest bg-primary/10 px-3 py-1 mb-2 inline-block font-bold">LIVE SIMULATION</span>
+<p class="text-2xl font-bold font-['Space_Grotesk'] text-on-background">TISSUE REPAIR ALPHA_04</p>
+</div>
+</div>
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="flex-grow bg-white border-l-4 border-primary p-8 flex flex-col justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary mb-4 text-4xl">monitor_heart</span>
+<h4 class="font-['Space_Grotesk'] font-bold text-xl mb-2 text-on-background">BIO-FEEDBACK</h4>
+<p class="text-sm text-zinc-500 leading-relaxed font-['Inter']">Real-time haptic and visual response to every incision. Precise bleeding control mechanics powered by Fluid-Engine 4.0.</p>
+</div>
+<div class="flex-grow bg-white border-l-4 border-tertiary p-8 flex flex-col justify-center shadow-sm">
+<span class="material-symbols-outlined text-tertiary mb-4 text-4xl">warning</span>
+<h4 class="font-['Space_Grotesk'] font-bold text-xl mb-2 text-on-background">CRITICAL_FAIL_DETECTION</h4>
+<p class="text-sm text-zinc-500 leading-relaxed font-['Inter']">AI identifies sub-optimal movements and provides immediate corrective telemetry to prevent lethal outcomes.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Section -->
+<section class="px-10 py-32 border-y border-outline/20">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/5 flex items-center justify-center border border-primary/20 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">precision_manufacturing</span>
+</div>
+<h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-on-background">PERFORM ACTION</h5>
+<p class="text-[10px] text-zinc-500 uppercase tracking-wider">Execute surgical steps within the simulated environment</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/5 flex items-center justify-center border border-primary/20 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">sensors</span>
+</div>
+<h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-on-background">SYSTEM TRACKS</h5>
+<p class="text-[10px] text-zinc-500 uppercase tracking-wider">High-fidelity motion and pressure data logged every 1ms</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/5 flex items-center justify-center border border-primary/20 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+</div>
+<h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-on-background">AI EVALUATES</h5>
+<p class="text-[10px] text-zinc-500 uppercase tracking-wider">Neural networks compare actions against professional benchmarks</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/5 flex items-center justify-center border border-primary/20 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">trending_up</span>
+</div>
+<h5 class="font-['Space_Grotesk'] font-bold mb-2 tracking-widest text-xs text-on-background">IMPROVE SKILLS</h5>
+<p class="text-[10px] text-zinc-500 uppercase tracking-wider">Review heatmaps and data logs to reach mastery level</p>
+</div>
+</div>
+</section>
+<!-- Why Simetra -->
+<section class="px-10 py-32 bg-background">
+<div class="flex flex-col md:flex-row gap-20">
+<div class="md:w-1/3">
+<h2 class="text-5xl font-black font-['Space_Grotesk'] leading-tight mb-8 text-on-background">WHY<br/><span class="text-primary">SIMETRA?</span></h2>
+<p class="text-zinc-500 font-['Inter'] leading-relaxed">Traditional surgical training is limited by physical resources and supervisor availability. SIMETRA breaks these barriers using neural-simulation.</p>
+</div>
+<div class="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-primary"></div>
+<h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-on-background">Real-time tracking</h4>
+</div>
+<p class="text-sm text-zinc-500 font-light">Sub-millimeter tracking accuracy for precise simulation of delicate procedures.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-primary"></div>
+<h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-on-background">AI feedback</h4>
+</div>
+<p class="text-sm text-zinc-500 font-light">Immediate vocal and visual pointers during the procedure to correct technique.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-primary"></div>
+<h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-on-background">No hardware required</h4>
+</div>
+<p class="text-sm text-zinc-500 font-light">Accessible via any standard browser. No expensive VR headsets needed.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 bg-primary"></div>
+<h4 class="font-['Space_Grotesk'] font-bold tracking-widest text-sm uppercase text-on-background">Scalable</h4>
+</div>
+<p class="text-sm text-zinc-500 font-light">Deploy to entire medical cohorts instantly with centralized progress tracking.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="relative px-10 py-40 flex flex-col items-center overflow-hidden bg-surface">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-[800px] h-[800px] border border-primary/5 rounded-full animate-pulse"></div>
+</div>
+<div class="z-10 text-center space-y-12">
+<h2 class="text-6xl font-black font-['Space_Grotesk'] uppercase tracking-tighter text-on-background">Ready to<br/>Operate?</h2>
+<div class="flex flex-col items-center">
+<button class="bg-primary text-white px-16 py-6 font-['Space_Grotesk'] font-bold tracking-[0.3em] uppercase hover:shadow-xl hover:shadow-primary/20 transition-all group">
+                    Begin Procedure
+                    <span class="inline-block translate-x-2 group-hover:translate-x-4 transition-transform">→</span>
+</button>
+<p class="mt-6 font-['Space_Grotesk'] text-[10px] tracking-[0.2em] text-zinc-400 uppercase">System Clearance: AUTHORIZED</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-8 px-10 flex flex-col md:flex-row justify-between items-center bg-background border-t border-outline/20">
+<div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-400 mb-4 md:mb-0">
+            © 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED
+        </div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-400 hover:text-primary transition-colors" href="#">SYSTEM_STATUS</a>
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-400 hover:text-primary transition-colors" href="#">SECURITY_ENCRYPTION</a>
+<a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-zinc-400 hover:text-primary transition-colors" href="#">PROTOCOL_v4.2</a>
+</div>
+</footer>
+</main>
+</body></html>
