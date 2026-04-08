@@ -212,6 +212,7 @@ let state = STATES.INCISION;
 let humanModel = null, heartModel = null, faultyNode = null;
 let ablationProgress = 0, ablating = false, ablateInterval = null, ablateHoldStart = null;
 let stepsDone = 0, startTime = Date.now();
+let timerRunning = false, finalTimeStr = "00:00";
 let totalAcc = 0, accCount = 0;
 const perfData = { steps: [], mistakes: 0, accuracy: 0, time: 0 };
 
@@ -358,14 +359,21 @@ function advanceState() {
       spawnFaultyNode();
       break;
     case STATES.COMPLETE:
-      document.getElementById('ablate-hint').style.display = 'none';
+      if (document.getElementById('ablate-hint')) document.getElementById('ablate-hint').style.display = 'none';
       setStep('COMPLETE ✓', 'PROCEDURE DONE', 'Cardiac ablation successful — redirecting to evaluation');
       setInstr('PROCEDURE COMPLETE — LOADING EVALUATION...');
       document.getElementById('s-phase').textContent = 'COMPLETE';
+      timerRunning = false;
+      const overlay = document.getElementById('completion-overlay');
+      if (overlay) {
+        document.getElementById('final-time-val').textContent = finalTimeStr;
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.style.opacity = '1'; }, 50);
+      }
       perfData.time = elapsed();
       perfData.accuracy = Math.round(totalAcc / Math.max(accCount, 1));
       sessionStorage.setItem('simResults', JSON.stringify(perfData));
-      setTimeout(() => { window.location.href = 'evaluation.html'; }, 3000);
+      setTimeout(() => { window.location.href = 'evaluation.html'; }, 5000);
       break;
   }
 }
@@ -590,8 +598,13 @@ function animate() {
   document.getElementById('t-o2').className = 'tele-val' + (o2 < 95 ? ' warn' : '');
 
   // Timer
-  const s = elapsed(), m = String(Math.floor(s / 60)).padStart(2, '0'), sec = String(s % 60).padStart(2, '0');
-  document.getElementById('s-time').textContent = m + ':' + sec;
+  if (timerRunning) {
+    const s = elapsed(), m = String(Math.floor(s / 60)).padStart(2, '0'), sec = String(s % 60).padStart(2, '0');
+    finalTimeStr = m + ':' + sec;
+  }
+  document.getElementById('s-time').textContent = finalTimeStr;
+  const topVal = document.getElementById('top-timer-val');
+  if (topVal) topVal.textContent = finalTimeStr;
 
   drawParticles();
   drawECG();
@@ -631,7 +644,7 @@ function hideLoading() {
   setTimeout(() => {
     const ol = document.getElementById('loading-overlay');
     ol.style.opacity = '0';
-    setTimeout(() => ol.style.display = 'none', 700);
+    setTimeout(() => { ol.style.display = 'none'; startTime = Date.now(); timerRunning = true; }, 700);
   }, 400);
 }
 function elapsed() { return Math.round((Date.now() - startTime) / 1000); }
