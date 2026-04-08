@@ -133,10 +133,10 @@ let drawing = false, incisionPoints = [];
 
 function drawGuideLine() {
   iCtx.clearRect(0, 0, iCanvas.width, iCanvas.height);
-  // Chest is at screen center since camera targets Y=0
+  // Vertical incision line down the sternum — center of screen
   const cx = iCanvas.width / 2;
   const cy = iCanvas.height / 2;
-  const w = iCanvas.width * 0.14; // tight span across sternum
+  const h = iCanvas.height * 0.22; // span vertically across chest
 
   // Glow outer
   iCtx.shadowColor = '#0891b2';
@@ -144,18 +144,18 @@ function drawGuideLine() {
   iCtx.strokeStyle = 'rgba(8,145,178,0.18)';
   iCtx.lineWidth = 8;
   iCtx.setLineDash([]);
-  iCtx.beginPath(); iCtx.moveTo(cx - w, cy); iCtx.lineTo(cx + w, cy); iCtx.stroke();
+  iCtx.beginPath(); iCtx.moveTo(cx, cy - h); iCtx.lineTo(cx, cy + h); iCtx.stroke();
 
   // Main dashed line
   iCtx.shadowBlur = 10;
   iCtx.strokeStyle = 'rgba(8,145,178,0.7)';
   iCtx.lineWidth = 2;
   iCtx.setLineDash([10, 6]);
-  iCtx.beginPath(); iCtx.moveTo(cx - w, cy); iCtx.lineTo(cx + w, cy); iCtx.stroke();
+  iCtx.beginPath(); iCtx.moveTo(cx, cy - h); iCtx.lineTo(cx, cy + h); iCtx.stroke();
   iCtx.setLineDash([]);
 
   // Endpoint markers
-  [[cx - w, cy], [cx + w, cy]].forEach(([x, y]) => {
+  [[cx, cy - h], [cx, cy + h]].forEach(([x, y]) => {
     iCtx.shadowBlur = 12;
     iCtx.fillStyle = '#0891b2';
     iCtx.beginPath(); iCtx.arc(x, y, 5, 0, Math.PI * 2); iCtx.fill();
@@ -168,34 +168,27 @@ function drawGuideLine() {
   iCtx.shadowBlur = 0;
   iCtx.fillStyle = 'rgba(8,145,178,0.6)';
   iCtx.font = '700 9px Space Grotesk, sans-serif';
-  iCtx.letterSpacing = '0.2em';
   iCtx.textAlign = 'center';
-  iCtx.fillText('INCISION PATH — DRAG HERE', cx, cy - 16);
+  iCtx.fillText('STERNOTOMY PATH', cx + 20, cy - h - 8);
 
-  // Tick marks
+  // Tick marks along the line
   for (let i = -3; i <= 3; i++) {
-    const tx = cx + (i * w / 3.5);
+    const ty = cy + (i * h / 3.5);
     iCtx.strokeStyle = 'rgba(8,145,178,0.35)';
     iCtx.lineWidth = 1;
-    iCtx.beginPath(); iCtx.moveTo(tx, cy - 6); iCtx.lineTo(tx, cy + 6); iCtx.stroke();
+    iCtx.beginPath(); iCtx.moveTo(cx - 6, ty); iCtx.lineTo(cx + 6, ty); iCtx.stroke();
   }
 }
 
 function drawIncisionStroke(points) {
   if (points.length < 2) return;
   iCtx.clearRect(0, 0, iCanvas.width, iCanvas.height);
-  // Glow layer
-  iCtx.shadowColor = '#0891b2';
-  iCtx.shadowBlur = 20;
-  iCtx.strokeStyle = 'rgba(8,145,178,0.3)';
-  iCtx.lineWidth = 10;
+  iCtx.shadowColor = '#0891b2'; iCtx.shadowBlur = 20;
+  iCtx.strokeStyle = 'rgba(8,145,178,0.3)'; iCtx.lineWidth = 10;
   iCtx.lineCap = 'round'; iCtx.lineJoin = 'round';
   iCtx.beginPath(); iCtx.moveTo(points[0].x, points[0].y);
   points.forEach(p => iCtx.lineTo(p.x, p.y)); iCtx.stroke();
-  // Core line
-  iCtx.shadowBlur = 8;
-  iCtx.strokeStyle = '#0891b2';
-  iCtx.lineWidth = 2.5;
+  iCtx.shadowBlur = 8; iCtx.strokeStyle = '#0891b2'; iCtx.lineWidth = 2.5;
   iCtx.beginPath(); iCtx.moveTo(points[0].x, points[0].y);
   points.forEach(p => iCtx.lineTo(p.x, p.y)); iCtx.stroke();
   iCtx.shadowBlur = 0;
@@ -203,11 +196,13 @@ function drawIncisionStroke(points) {
 
 function calcAccuracy(points) {
   if (points.length < 2) return 0;
-  const targetY = iCanvas.height * 0.50; // center = chest
-  const avgDev = points.reduce((s, p) => s + Math.abs(p.y - targetY), 0) / points.length;
-  const span = points[points.length - 1].x - points[0].x;
-  const spanScore = Math.min(span / (iCanvas.width * 0.4), 1);
-  const devScore = Math.max(0, 1 - avgDev / (iCanvas.height * 0.07));
+  const targetX = iCanvas.width / 2; // vertical line at center X
+  // Measure deviation from center X (horizontal wobble)
+  const avgDev = points.reduce((s, p) => s + Math.abs(p.x - targetX), 0) / points.length;
+  // Measure vertical span (should drag top to bottom)
+  const span = Math.abs(points[points.length - 1].y - points[0].y);
+  const spanScore = Math.min(span / (iCanvas.height * 0.3), 1);
+  const devScore = Math.max(0, 1 - avgDev / (iCanvas.width * 0.06));
   return Math.round((devScore * 0.75 + spanScore * 0.25) * 100);
 }
 
@@ -383,39 +378,37 @@ function loadHuman() {
   const paths = ['models/human.glb', '../aserts/models/human.glb'];
   tryLoad(paths, 0, (gltf) => {
     humanModel = gltf.scene;
+    humanModel.rotation.y = Math.PI; // face camera
 
-    // Add to scene first so world matrix is computed
+    // Add to scene and force matrix update before measuring
     scene.add(humanModel);
+    humanModel.updateMatrixWorld(true);
 
-    // Compute bounding box in world space
     const box = new THREE.Box3().setFromObject(humanModel);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
+    console.log('Human model size:', size, 'center:', center);
 
-    console.log('Model size:', size, 'center:', center);
+    if (size.y === 0) { scene.remove(humanModel); buildFallback(); return; }
 
-    // Scale so height = 3 units
-    const maxDim = Math.max(size.x, size.y, size.z);
-    if (maxDim === 0) { console.error('Model has zero size'); buildFallback(); return; }
-    const scale = 3.0 / maxDim;
-
+    // Scale so model height = 3 units
+    const scale = 3.0 / size.y;
     humanModel.scale.setScalar(scale);
-    humanModel.rotation.y = Math.PI;
+    humanModel.updateMatrixWorld(true);
 
     // Recompute after scale
     const box2 = new THREE.Box3().setFromObject(humanModel);
     const size2 = box2.getSize(new THREE.Vector3());
     const center2 = box2.getCenter(new THREE.Vector3());
 
-    // Shift so chest (top 25% of body) sits at Y=0
-    const chestY = box2.max.y - size2.y * 0.25;
-    humanModel.position.y -= chestY;
-    humanModel.position.x -= center2.x;
-    humanModel.position.z -= center2.z;
+    // Chest is ~25% down from top — place it at Y=0 (camera target)
+    const chestWorldY = box2.max.y - size2.y * 0.25;
+    humanModel.position.set(-center2.x, -chestWorldY, -center2.z);
 
     humanModel.traverse(c => {
       if (c.isMesh) {
-        c.castShadow = true; c.receiveShadow = true;
+        c.castShadow = true;
+        c.receiveShadow = true;
         const mats = Array.isArray(c.material) ? c.material : [c.material];
         mats.forEach(m => { m.transparent = true; m.opacity = 1; });
       }
@@ -427,7 +420,7 @@ function loadHuman() {
     setLoadProg(90);
     setTimeout(hideLoading, 500);
     drawGuideLine();
-    speak('Cardiac ablation simulation ready. Step one: make the incision. Hold left mouse and drag along the cyan guide line.');
+    speak('Cardiac ablation simulation ready. Step one: make the incision. Hold left mouse and drag down the sternum.');
   }, buildFallback);
 }
 
@@ -449,10 +442,12 @@ function buildFallback() {
   const legGeo = new THREE.CapsuleGeometry(0.13, 0.8, 6, 8);
   const lLeg = new THREE.Mesh(legGeo, mat); lLeg.position.set(-0.2, -0.9, 0); humanModel.add(lLeg);
   const rLeg = new THREE.Mesh(legGeo, mat); rLeg.position.set(0.2, -0.9, 0); humanModel.add(rLeg);
-  // Chest marker line (3D)
-  const lineGeo = new THREE.BoxGeometry(0.7, 0.01, 0.01);
+  // Vertical sternotomy marker (3D line down the sternum)
+  const lineGeo = new THREE.BoxGeometry(0.015, 0.7, 0.015);
   const lineMat = new THREE.MeshBasicMaterial({ color: 0x0891b2 });
-  const chestLine = new THREE.Mesh(lineGeo, lineMat); chestLine.position.set(0, 0.15, 0.39); humanModel.add(chestLine);
+  const chestLine = new THREE.Mesh(lineGeo, lineMat);
+  chestLine.position.set(0, 0.1, 0.39);
+  humanModel.add(chestLine);
 
   scene.add(humanModel);
   camera.position.set(0, 0, 2.6);
@@ -468,14 +463,22 @@ function loadHeart() {
   const paths = ['models/realistic_human_heart.glb', '../aserts/models/realistic_human_heart.glb'];
   tryLoad(paths, 0, (gltf) => {
     heartModel = gltf.scene;
+    scene.add(heartModel);
+    heartModel.updateMatrixWorld(true);
+
     const box = new THREE.Box3().setFromObject(heartModel);
     const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = 1.8 / maxDim;
+    const center = box.getCenter(new THREE.Vector3());
+    const scale = 1.8 / Math.max(size.x, size.y, size.z);
+
     heartModel.scale.setScalar(scale);
     heartModel.userData.baseScale = scale;
-    const center = box.getCenter(new THREE.Vector3());
-    heartModel.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+    heartModel.updateMatrixWorld(true);
+
+    const box2 = new THREE.Box3().setFromObject(heartModel);
+    const center2 = box2.getCenter(new THREE.Vector3());
+    heartModel.position.set(-center2.x, -center2.y, -center2.z);
+
     heartModel.traverse(c => {
       if (c.isMesh) {
         c.castShadow = true;
@@ -483,18 +486,18 @@ function loadHeart() {
         mats.forEach(m => { m.emissive = new THREE.Color(0x3d0000); m.emissiveIntensity = 0.25; });
       }
     });
-    scene.add(heartModel);
-    camera.position.set(0, 0.3, 3.2);
+    camera.position.set(0, 0, 3.0);
     controls.target.set(0, 0, 0);
     controls.update();
   }, () => {
-    // Fallback heart
     const geo = new THREE.SphereGeometry(0.7, 20, 20);
     const mat = new THREE.MeshStandardMaterial({ color: 0x8b0000, emissive: 0x3d0000, emissiveIntensity: 0.5, roughness: 0.5 });
     heartModel = new THREE.Mesh(geo, mat);
     heartModel.userData.baseScale = 1;
     scene.add(heartModel);
-    camera.position.set(0, 0.3, 3.2);
+    camera.position.set(0, 0, 3.0);
+    controls.target.set(0, 0, 0);
+    controls.update();
   });
 }
 
