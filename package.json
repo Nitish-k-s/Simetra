@@ -6,5 +6,7 @@
   "scripts": {
     "dev": "npx serve ./simetra -l 3000",
     "start": "npx serve ./simetra"
-  }
+  },
+  "dependencies": {},
+  "devDependencies": {}
 }

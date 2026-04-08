@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIMETRA AI Test</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f8fafc;
+    }
+    h1 { color: #0891b2; }
+    .section {
+      background: white;
+      padding: 24px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #0891b2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    button:hover { background: #06b6d4; }
+    button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .result {
+      background: #f1f5f9;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .loading { color: #f59e0b; }
+    .success { color: #10b981; }
+    .error { color: #ef4444; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 SIMETRA AI Integration Test</h1>
+  <p>Test the Gemini AI endpoints for evaluation and chat functionality.</p>
+
+  <!-- Evaluation Test -->
+  <div class="section">
+    <h2>1. AI Performance Evaluation</h2>
+    <p>Test the <code>/api/evaluate</code> endpoint with sample CPR metrics.</p>
+    
+    <label>Procedure:</label>
+    <select id="eval-procedure">
+      <option value="CPR">CPR</option>
+      <option value="Cardiac Electrical Stabilization">Cardiac Electrical Stabilization</option>
+      <option value="Emergency Thoracic Access">Emergency Thoracic Access</option>
+    </select>
+
+    <label>Accuracy (0-100):</label>
+    <input type="number" id="eval-accuracy" value="85" min="0" max="100">
+
+    <label>Avg BPM (for CPR):</label>
+    <input type="number" id="eval-bpm" value="110" min="60" max="160">
+
+    <label>Rhythm Accuracy (0-100):</label>
+    <input type="number" id="eval-rhythm" value="75" min="0" max="100">
+
+    <button onclick="testEvaluation()">Test Evaluation API</button>
+    <button onclick="testEvaluationAdvanced()">Test Advanced Metrics</button>
+    
+    <div id="eval-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Chat Test -->
+  <div class="section">
+    <h2>2. AI Training Assistant Chat</h2>
+    <p>Test the <code>/api/chat</code> endpoint with training questions.</p>
+    
+    <label>Your Question:</label>
+    <textarea id="chat-message" rows="3" placeholder="e.g., What is the purpose of ablation?">What is the purpose of ablation?</textarea>
+
+    <label>Procedure Context:</label>
+    <select id="chat-context">
+      <option value="General">General</option>
+      <option value="CPR">CPR</option>
+      <option value="Cardiac Electrical Stabilization" selected>Cardiac Electrical Stabilization</option>
+      <option value="Emergency Thoracic Access">Emergency Thoracic Access</option>
+    </select>
+
+    <button onclick="testChat()">Send Message</button>
+    <button onclick="testChatQuick('How can I improve my CPR technique?')">Quick: CPR Tips</button>
+    <button onclick="testChatQuick('Explain the steps of cardiac ablation')">Quick: Ablation Steps</button>
+    
+    <div id="chat-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Connection Test -->
+  <div class="section">
+    <h2>3. Connection & Environment Test</h2>
+    <p>Verify API endpoints are accessible and environment is configured.</p>
+    
+    <button onclick="testConnection()">Test Connection</button>
+    <button onclick="testBothEndpoints()">Test Both Endpoints</button>
+    
+    <div id="connection-result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    // Test Evaluation API
+    async function testEvaluation() {
+      const resultDiv = document.getElementById('eval-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="loading">⏳ Calling /api/evaluate...</span>';
+
+      const procedure = document.getElementById('eval-procedure').value;
+      const accuracy = parseInt(document.getElementById('eval-accuracy').value);
+      const avgBPM = parseInt(document.getElementById('eval-bpm').value);
+      const rhythmAccuracy = parseInt(document.getElementById('eval-rhythm').value);
+
+      const payload = {
+        procedure,
+        metrics: {
+          accuracy,
+          avg_bpm: avgBPM,
+          rhythm_accuracy: rhythmAccuracy,
+          consistency: 70,
+          total_compressions: 60,
+          completion_time: 60
+        }
+      };
+
+      try {
+        const startTime = Date.now();
+        const response = await fetch('/api/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const elapsed = Date.now() - startTime;
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        resultDiv.innerHTML = `
+<span class="success">✅ Success! (${elapsed}ms)</span>
+
+REQUEST:
+${JSON.stringify(payload, null, 2)}
+
+RESPONSE:
+${JSON.stringify(data, null, 2)}
+
+PARSED RESULTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Score: ${data.score}/100
+Skill Level: ${data.skill_level}
+
+Strengths:
+${data.strengths.map((s, i) => `  ${i+1}. ${s}`).join('\n')}
+
+Improvements:
+${data.improvements.map((s, i) => `  ${i+1}. ${s}`).join('\n')}
+
+Summary:
+${data.summary}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>\n\nMake sure:\n1. API key is set in .env\n2. Server is running\n3. /api/evaluate endpoint exists`;
+      }
+    }
+
+    // Test with advanced cardiac metrics
+    async function testEvaluationAdvanced() {
+      const resultDiv = document.getElementById('eval-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="loading">⏳ Testing with advanced cardiac metrics...</span>';
+
+      const payload = {
+        procedure: "Cardiac Electrical Stabilization",
+        metrics: {
+          accuracy: 92,
+          reaction_time: 1.2,
+          stability: 88,
+          decision_quality: 95,
+          completion_time: 45
+        }
+      };
+
+      try {
+        const startTime = Date.now();
+        const response = await fetch('/api/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const elapsed = Date.now() - startTime;
+
+        const data = await response.json();
+        
+        resultDiv.innerHTML = `
+<span class="success">✅ Advanced Test Success! (${elapsed}ms)</span>
+
+${JSON.stringify(data, null, 2)}
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+      }
+    }
+
+    // Test Chat API
+    async function testChat() {
+      const resultDiv = document.getElementById('chat-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="loading">⏳ Calling /api/chat...</span>';
+
+      const message = document.getElementById('chat-message').value;
+      const context = document.getElementById('chat-context').value;
+
+      const payload = {
+        message,
+        procedure_context: context
+      };
+
+      try {
+        const startTime = Date.now();
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const elapsed = Date.now() - startTime;
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        resultDiv.innerHTML = `
+<span class="success">✅ Success! (${elapsed}ms)</span>
+
+REQUEST:
+${JSON.stringify(payload, null, 2)}
+
+RESPONSE:
+${JSON.stringify(data, null, 2)}
+
+AI REPLY:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${data.reply}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>\n\nMake sure:\n1. API key is set in .env\n2. Server is running\n3. /api/chat endpoint exists`;
+      }
+    }
+
+    // Quick chat test
+    async function testChatQuick(message) {
+      document.getElementById('chat-message').value = message;
+      await testChat();
+    }
+
+    // Test connection
+    async function testConnection() {
+      const resultDiv = document.getElementById('connection-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="loading">⏳ Testing connection...</span>';
+
+      const tests = [];
+
+      // Test evaluation endpoint
+      try {
+        const res = await fetch('/api/evaluate', { method: 'OPTIONS' });
+        tests.push(`✅ /api/evaluate - ${res.status} ${res.statusText}`);
+      } catch (e) {
+        tests.push(`❌ /api/evaluate - ${e.message}`);
+      }
+
+      // Test chat endpoint
+      try {
+        const res = await fetch('/api/chat', { method: 'OPTIONS' });
+        tests.push(`✅ /api/chat - ${res.status} ${res.statusText}`);
+      } catch (e) {
+        tests.push(`❌ /api/chat - ${e.message}`);
+      }
+
+      resultDiv.innerHTML = `
+<span class="success">Connection Test Results:</span>
+
+${tests.join('\n')}
+
+Environment:
+- Location: ${window.location.origin}
+- User Agent: ${navigator.userAgent.substring(0, 50)}...
+      `;
+    }
+
+    // Test both endpoints sequentially
+    async function testBothEndpoints() {
+      const resultDiv = document.getElementById('connection-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="loading">⏳ Testing both endpoints...</span>';
+
+      const results = [];
+
+      // Test 1: Evaluation
+      try {
+        const res = await fetch('/api/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            procedure: 'CPR',
+            metrics: { accuracy: 80, avg_bpm: 110, rhythm_accuracy: 75, consistency: 70, total_compressions: 50, completion_time: 50 }
+          })
+        });
+        const data = await res.json();
+        results.push(`✅ Evaluation API: Score ${data.score}, Level ${data.skill_level}`);
+      } catch (e) {
+        results.push(`❌ Evaluation API: ${e.message}`);
+      }
+
+      // Test 2: Chat
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'Test message',
+            procedure_context: 'CPR'
+          })
+        });
+        const data = await res.json();
+        results.push(`✅ Chat API: "${data.reply.substring(0, 50)}..."`);
+      } catch (e) {
+        results.push(`❌ Chat API: ${e.message}`);
+      }
+
+      resultDiv.innerHTML = `
+<span class="success">Both Endpoints Test:</span>
+
+${results.join('\n\n')}
+      `;
+    }
+  </script>
+</body>
+</html>
