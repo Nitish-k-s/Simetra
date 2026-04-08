@@ -373,6 +373,7 @@ function advanceState() {
         setTimeout(() => { overlay.style.opacity = '1'; }, 50);
       }
       perfData.time = elapsed();
+      perfData.timeStr = finalTimeStr;
       perfData.accuracy = Math.round(totalAcc / Math.max(accCount, 1));
       sessionStorage.setItem('simResults', JSON.stringify(perfData));
       setTimeout(() => { window.location.href = 'evaluation.html'; }, 5000);
@@ -678,6 +679,7 @@ if (endBtn) {
   endBtn.addEventListener('click', function(e) {
     e.preventDefault();
     perfData.time = elapsed();
+    perfData.timeStr = finalTimeStr;
     perfData.accuracy = Math.round(totalAcc / Math.max(accCount, 1));
     sessionStorage.setItem('simResults', JSON.stringify(perfData));
     window.location.href = this.href;

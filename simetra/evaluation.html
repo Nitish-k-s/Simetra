@@ -267,11 +267,9 @@ if (raw) {
     const precVal = incStep ? incStep.accuracy : 94;
     const ablVal  = ablStep ? ablStep.accuracy : 91;
     const speedVal = Math.max(30, 100 - Math.round(d.time / 2));
-    const m = String(Math.floor(d.time / 60)).padStart(2, '0');
-    const s = String(d.time % 60).padStart(2, '0');
 
     const timeEl = document.getElementById('eval-time-val');
-    if (timeEl) timeEl.textContent = `${m}:${s}`;
+    if (timeEl) timeEl.textContent = d.timeStr || (String(Math.floor(d.time/60)).padStart(2,'0') + ':' + String(d.time%60).padStart(2,'0'));
 
     document.getElementById('score-val').textContent = score;
     document.getElementById('score-bar').style.width = score + '%';
