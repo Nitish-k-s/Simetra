@@ -673,5 +673,16 @@ document.addEventListener('keydown', e => {
 });
 
 // ── INIT ──────────────────────────────────────────────────────
+const endBtn = document.getElementById('end-btn');
+if (endBtn) {
+  endBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    perfData.time = elapsed();
+    perfData.accuracy = Math.round(totalAcc / Math.max(accCount, 1));
+    sessionStorage.setItem('simResults', JSON.stringify(perfData));
+    window.location.href = this.href;
+  });
+}
+
 loadHuman();
 animate();
