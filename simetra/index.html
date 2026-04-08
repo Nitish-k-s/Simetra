@@ -63,6 +63,12 @@
 
   /* particle canvas */
   #bg-particles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.6}
+
+  /* modal styles */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:10000;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+  .modal-overlay.active{display:flex;opacity:1}
+  .modal-box{background:#fff;border:1px solid #e2e8f0;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,0.15);transform:scale(0.95);transition:transform .3s}
+  .modal-overlay.active .modal-box{transform:scale(1)}
 </style>
 </head>
 <body class="hud-grid">
@@ -72,18 +78,18 @@
 
 <!-- Top Nav -->
 <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200">
-  <div class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk']">SIMETRA</div>
+  <a href="index.html" class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk'] hover:opacity-80 transition-opacity">SIMETRA</a>
   <div class="hidden md:flex gap-8 items-center">
     <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-[#0891b2] border-b-2 border-[#0891b2] pb-1" href="index.html">HOME</a>
     <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="procedures.html">PROCEDURES</a>
     <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="simulation.html">SIMULATION</a>
-    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="#">RESOURCES</a>
+    <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="instructions.html">GUIDE</a>
     <a class="font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold text-slate-400 hover:text-[#0891b2] transition-colors" href="evaluation.html">EVALUATION</a>
   </div>
   <div class="flex items-center gap-6">
     <div class="flex gap-4 text-[#0891b2]">
-      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1">settings</span>
-      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1">notifications_active</span>
+      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1" onclick="openModal('settings-modal')">settings</span>
+      <span class="material-symbols-outlined cursor-pointer hover:bg-[#0891b2]/10 p-1" onclick="openModal('notifications-modal')">notifications_active</span>
     </div>
     <div class="font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold px-3 py-1 border border-[#0891b2]/30 text-[#0891b2] bg-[#0891b2]/5">
       SYSTEM ACTIVE
@@ -107,22 +113,22 @@
       <span class="material-symbols-outlined">grid_view</span>
       <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">DASHBOARD</span>
     </a>
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="procedures.html">
       <span class="material-symbols-outlined">psychology</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">NEURAL_LINK</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">PROCEDURES</span>
     </a>
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="simulation.html">
       <span class="material-symbols-outlined">monitor_heart</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">BIO_TELEMETRY</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">SIMULATION</span>
     </a>
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="#">
+    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:text-[#0891b2] hover:bg-[#0891b2]/5 transition-all" href="evaluation.html">
       <span class="material-symbols-outlined">database</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">ARCHIVE</span>
+      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">EVALUATION</span>
     </a>
   </div>
   <div class="px-4 mt-auto">
     <a href="procedures.html" class="block w-full bg-[#0891b2] text-white py-3 font-['Space_Grotesk'] text-[10px] font-bold tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-center">
-      INITIALIZE_SIM
+      START TRAINING
     </a>
   </div>
 </aside>
@@ -150,9 +156,9 @@
         <a href="procedures.html" class="bg-[#0891b2] text-white px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-[#0891b2]/20 flex items-center gap-3 justify-center cta-pulse">
           Start Training <span class="material-symbols-outlined">arrow_forward</span>
         </a>
-        <button class="border border-[#0891b2] text-[#0891b2] px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:bg-[#0891b2]/5 transition-colors">
-          View Sandbox
-        </button>
+        <a href="instructions.html" class="border border-[#0891b2] text-[#0891b2] px-10 py-4 font-['Space_Grotesk'] font-bold tracking-[0.2em] uppercase hover:bg-[#0891b2]/5 transition-colors flex items-center gap-3 justify-center">
+          <span class="material-symbols-outlined">menu_book</span> Simulation Guide
+        </a>
       </div>
     </div>
     <div class="absolute bottom-10 flex flex-col items-center gap-2">
@@ -238,16 +244,110 @@
 
   <!-- Footer -->
   <footer class="w-full py-8 px-10 flex flex-col md:flex-row justify-between items-center bg-white border-t border-slate-200">
-    <div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 mb-4 md:mb-0">© 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED</div>
+    <div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 mb-4 md:mb-0">© 2025 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED</div>
     <div class="flex gap-8">
-      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SYSTEM_STATUS</a>
-      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SECURITY_ENCRYPTION</a>
-      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">PROTOCOL_v4.2</a>
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="index.html">HOME</a>
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="procedures.html">PROCEDURES</a>
+      <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="evaluation.html">EVALUATION</a>
     </div>
   </footer>
 </main>
 
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settings-modal" onclick="closeModal(event, 'settings-modal')">
+  <div class="modal-box">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-4">
+        <h2 class="font-['Space_Grotesk'] text-2xl font-bold tracking-tight text-[#0f172a]">Settings</h2>
+        <span class="material-symbols-outlined cursor-pointer text-slate-400 hover:text-[#0891b2] transition-colors" onclick="closeModalDirect('settings-modal')">close</span>
+      </div>
+      <div class="space-y-6">
+        <div class="flex justify-between items-center py-3 border-b border-slate-100">
+          <div>
+            <p class="font-['Space_Grotesk'] text-sm font-bold tracking-wider text-[#0f172a]">VOICE GUIDANCE</p>
+            <p class="font-['Inter'] text-xs text-slate-400">AI voice narration during simulation</p>
+          </div>
+          <div class="w-12 h-6 bg-[#0891b2] rounded-full flex items-center px-1 cursor-pointer" onclick="this.classList.toggle('bg-[#0891b2]');this.classList.toggle('bg-slate-300')">
+            <div class="w-4 h-4 bg-white rounded-full shadow transition-transform translate-x-6"></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center py-3 border-b border-slate-100">
+          <div>
+            <p class="font-['Space_Grotesk'] text-sm font-bold tracking-wider text-[#0f172a]">HAPTIC FEEDBACK</p>
+            <p class="font-['Inter'] text-xs text-slate-400">Vibration on mouse events (if supported)</p>
+          </div>
+          <div class="w-12 h-6 bg-slate-300 rounded-full flex items-center px-1 cursor-pointer" onclick="this.classList.toggle('bg-[#0891b2]');this.classList.toggle('bg-slate-300')">
+            <div class="w-4 h-4 bg-white rounded-full shadow transition-transform"></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center py-3">
+          <div>
+            <p class="font-['Space_Grotesk'] text-sm font-bold tracking-wider text-[#0f172a]">DIFFICULTY</p>
+            <p class="font-['Inter'] text-xs text-slate-400">Simulation difficulty level</p>
+          </div>
+          <select class="border border-slate-200 px-3 py-1 text-xs font-['Space_Grotesk'] font-bold text-[#0891b2] bg-white appearance-auto">
+            <option>BEGINNER</option>
+            <option selected>INTERMEDIATE</option>
+            <option>ADVANCED</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal-overlay" id="notifications-modal" onclick="closeModal(event, 'notifications-modal')">
+  <div class="modal-box">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-4">
+        <h2 class="font-['Space_Grotesk'] text-2xl font-bold tracking-tight text-[#0f172a]">Notifications</h2>
+        <span class="material-symbols-outlined cursor-pointer text-slate-400 hover:text-[#0891b2] transition-colors" onclick="closeModalDirect('notifications-modal')">close</span>
+      </div>
+      <div class="space-y-4">
+        <div class="flex items-start gap-4 p-4 bg-[#0891b2]/5 border-l-4 border-[#0891b2]">
+          <span class="material-symbols-outlined text-[#0891b2] text-lg mt-0.5">check_circle</span>
+          <div>
+            <p class="font-['Space_Grotesk'] text-xs font-bold tracking-wider text-[#0f172a]">SYSTEM READY</p>
+            <p class="font-['Inter'] text-xs text-slate-500 mt-1">All simulation modules loaded and calibrated.</p>
+            <p class="font-['Inter'] text-[10px] text-slate-400 mt-2">Just now</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 bg-slate-50">
+          <span class="material-symbols-outlined text-amber-500 text-lg mt-0.5">update</span>
+          <div>
+            <p class="font-['Space_Grotesk'] text-xs font-bold tracking-wider text-[#0f172a]">NEW PROCEDURE AVAILABLE</p>
+            <p class="font-['Inter'] text-xs text-slate-500 mt-1">CPR module will be available soon.</p>
+            <p class="font-['Inter'] text-[10px] text-slate-400 mt-2">2 hours ago</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 bg-slate-50">
+          <span class="material-symbols-outlined text-emerald-500 text-lg mt-0.5">school</span>
+          <div>
+            <p class="font-['Space_Grotesk'] text-xs font-bold tracking-wider text-[#0f172a]">TRAINING TIP</p>
+            <p class="font-['Inter'] text-xs text-slate-500 mt-1">Review the Simulation Guide before starting a new procedure for best results.</p>
+            <p class="font-['Inter'] text-[10px] text-slate-400 mt-2">1 day ago</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+// Modal functions
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
+function closeModal(event, id) {
+  if (event.target === event.currentTarget) {
+    document.getElementById(id).classList.remove('active');
+  }
+}
+function closeModalDirect(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
 // Cursor glow
 const glow = document.getElementById('cursor-glow');
 document.addEventListener('mousemove', e => {

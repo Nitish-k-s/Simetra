@@ -2,140 +2,76 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SIMETRA | Simulation Prep</title>
+<title>SIMETRA | Pre-Operative Guide</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary": "#0891b2",
-          "on-primary": "#FFFFFF",
-          "surface": "#f8fafc",
-          "on-surface": "#1e293b",
-          "on-surface-variant": "#475569",
-          "outline-variant": "#cbd5e1",
-          "surface-container": "#f1f5f9"
-        },
-        borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
-        fontFamily: { "headline": ["Space Grotesk"], "body": ["Inter"], "label": ["Space Grotesk"] }
-      }
-    }
-  }
-</script>
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .clinical-shadow { box-shadow: 0 10px 40px -10px rgba(8,145,178,0.12); }
   .scanline { background: linear-gradient(to bottom, transparent 50%, rgba(8,145,178,0.02) 50%); background-size: 100% 4px; }
+  .clinical-shadow { box-shadow: 0 10px 40px -10px rgba(8,145,178,0.12); }
 </style>
 </head>
 <body class="bg-[#f8fafc] text-[#1e293b] font-['Inter'] overflow-hidden scanline">
-
-<!-- Background underlay -->
-<div class="fixed inset-0 z-0 overflow-hidden opacity-5">
-  <div class="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-[#f8fafc]"></div>
-</div>
+<div class="fixed inset-0 z-0 overflow-hidden opacity-5"></div>
 
 <!-- Top Navigation -->
 <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200">
-  <div class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk']">SIMETRA</div>
+  <a href="index.html" class="text-2xl font-black tracking-tighter text-[#0891b2] font-['Space_Grotesk'] hover:opacity-80 transition-opacity">SIMETRA</a>
   <div class="hidden md:flex gap-8">
+    <a class="text-slate-400 hover:text-[#0891b2] transition-colors font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="index.html">HOME</a>
     <a class="text-slate-400 hover:text-[#0891b2] transition-colors font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="procedures.html">PROCEDURES</a>
-    <a class="text-[#0891b2] border-b-2 border-[#0891b2] pb-1 font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="#">SIMULATION</a>
-    <a class="text-slate-400 hover:text-[#0891b2] transition-colors font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="#">RESOURCES</a>
+    <a class="text-slate-400 hover:text-[#0891b2] transition-colors font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="simulation.html">SIMULATION</a>
     <a class="text-slate-400 hover:text-[#0891b2] transition-colors font-['Space_Grotesk'] tracking-widest uppercase text-xs font-bold" href="evaluation.html">EVALUATION</a>
   </div>
-  <div class="flex items-center gap-4">
-    <span class="material-symbols-outlined text-[#0891b2] text-sm">settings</span>
-    <span class="material-symbols-outlined text-[#0891b2] text-sm">notifications_active</span>
-    <div class="ml-4 px-3 py-1 border border-[#0891b2]/30 text-[#0891b2] font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold bg-[#0891b2]/5">SYSTEM ACTIVE</div>
-  </div>
+  <div class="ml-4 px-3 py-1 border border-[#0891b2]/30 text-[#0891b2] font-['Space_Grotesk'] tracking-widest uppercase text-[10px] font-bold bg-[#0891b2]/5">SYSTEM ACTIVE</div>
 </nav>
 
-<!-- Side Navigation -->
-<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col py-6 bg-white w-20 hover:w-64 transition-all duration-300 group border-r border-slate-200">
-  <div class="px-6 mb-8 hidden group-hover:block">
-    <div class="font-['Space_Grotesk'] text-[#0891b2] text-xs font-bold tracking-widest">SURGEON_01</div>
-    <div class="font-['Space_Grotesk'] text-slate-400 text-[10px] tracking-[0.2em]">RANK: ADVANCED</div>
-  </div>
-  <div class="flex flex-col gap-2 flex-grow">
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:bg-slate-50 transition-all" href="index.html">
-      <span class="material-symbols-outlined">grid_view</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest hidden group-hover:block">DASHBOARD</span>
-    </a>
-    <a class="flex items-center gap-4 px-6 py-4 bg-[#0891b2]/10 text-[#0891b2] border-r-4 border-[#0891b2]" href="#">
-      <span class="material-symbols-outlined">psychology</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest hidden group-hover:block">NEURAL_LINK</span>
-    </a>
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:bg-slate-50 transition-all" href="#">
-      <span class="material-symbols-outlined">monitor_heart</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest hidden group-hover:block">BIO_TELEMETRY</span>
-    </a>
-    <a class="flex items-center gap-4 px-6 py-4 text-slate-400 hover:bg-slate-50 transition-all" href="#">
-      <span class="material-symbols-outlined">database</span>
-      <span class="font-['Space_Grotesk'] text-[10px] tracking-widest hidden group-hover:block">ARCHIVE</span>
-    </a>
-  </div>
-  <div class="px-6 mt-auto">
-    <a href="simulation.html" class="block w-full bg-[#0891b2] text-white py-3 text-[10px] font-bold tracking-widest font-['Space_Grotesk'] uppercase opacity-0 group-hover:opacity-100 transition-opacity text-center">INITIALIZE_SIM</a>
-  </div>
-</aside>
-
 <!-- Main Instruction Overlay -->
-<main class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-[#f8fafc]/70 backdrop-blur-lg">
-  <div class="relative w-full max-w-5xl bg-white border border-slate-200 clinical-shadow">
+<main class="fixed inset-0 z-40 flex items-center justify-center p-6 bg-[#f8fafc]/70 backdrop-blur-lg pt-16">
+  <div class="relative w-full max-w-5xl bg-white border border-slate-200 clinical-shadow max-h-[calc(100vh-100px)] overflow-y-auto">
     <div class="absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-[#0891b2]/60"></div>
     <div class="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-[#0891b2]/60"></div>
     <div class="p-8 md:p-12 relative overflow-hidden">
-      <header class="mb-12 border-b border-slate-100 pb-6">
+      <header class="mb-10 border-b border-slate-100 pb-6">
         <div class="flex items-center gap-3 mb-4">
-          <span class="w-2 h-2 bg-[#0891b2]"></span>
-          <span class="font-['Space_Grotesk'] text-[10px] tracking-[0.4em] text-[#0891b2] font-bold">PROCEDURE_PROTOCOLS // v4.2.0</span>
+          <span class="w-2 h-2" id="header-dot"></span>
+          <span class="font-['Space_Grotesk'] text-[10px] tracking-[0.4em] font-bold" id="header-tag"></span>
         </div>
-        <h1 class="font-['Space_Grotesk'] text-5xl md:text-6xl font-bold tracking-tighter text-[#0f172a]">SIMULATION PREP</h1>
-        <p class="font-['Inter'] text-slate-500 text-sm mt-6 max-w-2xl leading-relaxed">
-          Initializing clinical mapping for surgical automation. Please follow all calibrated steps precisely to ensure 100% bio-synchronization with the virtual subject.
-        </p>
+        <h1 class="font-['Space_Grotesk'] text-4xl md:text-5xl font-bold tracking-tighter text-[#0f172a]" id="header-title"></h1>
+        <p class="font-['Inter'] text-slate-500 text-sm mt-4 max-w-2xl leading-relaxed" id="header-desc"></p>
       </header>
 
       <!-- Steps Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div class="group relative bg-slate-50 p-6 border border-slate-200 hover:border-[#0891b2]/40 hover:bg-white transition-all duration-300">
-          <div class="font-['Space_Grotesk'] text-4xl font-black text-[#0891b2]/10 absolute top-2 right-4 group-hover:text-[#0891b2]/20 transition-colors">01</div>
-          <div class="mb-6 h-32 flex items-center justify-center bg-slate-100 border border-slate-200">
-            <span class="material-symbols-outlined text-[#0891b2] text-5xl">drag_pan</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="steps-grid"></div>
+
+      <!-- Tracked Metrics -->
+      <div class="bg-slate-50 border border-slate-200 p-6 mb-10">
+        <h3 class="font-['Space_Grotesk'] font-bold text-sm tracking-widest text-[#0891b2] mb-4">TRACKED METRICS</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="flex items-center gap-3">
+            <div class="bg-[#0891b2]/10 px-3 py-1 font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2] tracking-wider border border-[#0891b2]/20">ACCURACY</div>
           </div>
-          <h3 class="font-['Space_Grotesk'] font-bold text-sm tracking-widest text-[#0891b2] mb-3">INCISION_PHASE</h3>
-          <p class="font-['Inter'] text-xs text-slate-500 leading-relaxed">Drag mouse along the projected laser line to perform precise anatomical incision.</p>
-        </div>
-        <div class="group relative bg-slate-50 p-6 border border-slate-200 hover:border-[#0891b2]/40 hover:bg-white transition-all duration-300">
-          <div class="font-['Space_Grotesk'] text-4xl font-black text-[#0891b2]/10 absolute top-2 right-4 group-hover:text-[#0891b2]/20 transition-colors">02</div>
-          <div class="mb-6 h-32 flex items-center justify-center bg-slate-100 border border-slate-200 relative">
-            <span class="material-symbols-outlined text-[#0891b2] text-5xl">emergency_home</span>
-            <div class="absolute top-2 right-2 w-3 h-3 bg-[#0891b2] rounded-full animate-pulse"></div>
+          <div class="flex items-center gap-3">
+            <div class="bg-[#0891b2]/10 px-3 py-1 font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2] tracking-wider border border-[#0891b2]/20">REACTION TIME</div>
           </div>
-          <h3 class="font-['Space_Grotesk'] font-bold text-sm tracking-widest text-[#0891b2] mb-3">HEMOSTASIS_PROTOCOL</h3>
-          <p class="font-['Inter'] text-xs text-slate-500 leading-relaxed">Control bleeding quickly using the cauterization tool to maintain vital pressure.</p>
-        </div>
-        <div class="group relative bg-slate-50 p-6 border border-slate-200 hover:border-[#0891b2]/40 hover:bg-white transition-all duration-300">
-          <div class="font-['Space_Grotesk'] text-4xl font-black text-[#0891b2]/10 absolute top-2 right-4 group-hover:text-[#0891b2]/20 transition-colors">03</div>
-          <div class="mb-6 h-32 flex items-center justify-center bg-slate-100 border border-slate-200 relative">
-            <span class="material-symbols-outlined text-[#0891b2] text-5xl">ads_click</span>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-[#0891b2] rounded-full animate-ping opacity-20"></div>
+          <div class="flex items-center gap-3">
+            <div class="bg-[#0891b2]/10 px-3 py-1 font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2] tracking-wider border border-[#0891b2]/20">STABILITY</div>
           </div>
-          <h3 class="font-['Space_Grotesk'] font-bold text-sm tracking-widest text-[#0891b2] mb-3">SYNAPSE_CONNECTION</h3>
-          <p class="font-['Inter'] text-xs text-slate-500 leading-relaxed">Interact with the heart to finalize the neural link and complete procedure.</p>
+          <div class="flex items-center gap-3">
+            <div class="bg-[#0891b2]/10 px-3 py-1 font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2] tracking-wider border border-[#0891b2]/20">DECISION</div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-[#0891b2]/10 px-3 py-1 font-['Space_Grotesk'] text-[10px] font-bold text-[#0891b2] tracking-wider border border-[#0891b2]/20">TIME</div>
+          </div>
         </div>
       </div>
 
       <!-- Footer CTA -->
-      <footer class="flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100 pt-10">
-        <div class="flex items-center gap-8">
+      <footer class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-slate-100 pt-8">
+        <div class="flex items-center gap-6">
           <div class="flex flex-col">
-            <span class="font-['Space_Grotesk'] text-[9px] tracking-[0.3em] text-slate-400 font-bold uppercase">SYSTEM_STABILITY</span>
+            <span class="font-['Space_Grotesk'] text-[9px] tracking-[0.3em] text-slate-400 font-bold uppercase">SYSTEM STABILITY</span>
             <div class="flex gap-1 mt-2">
               <div class="w-1.5 h-3.5 bg-[#0891b2]"></div>
               <div class="w-1.5 h-3.5 bg-[#0891b2]"></div>
@@ -144,25 +80,95 @@
               <div class="w-1.5 h-3.5 bg-slate-200"></div>
             </div>
           </div>
-          <div class="flex flex-col">
-            <span class="font-['Space_Grotesk'] text-[9px] tracking-[0.3em] text-slate-400 font-bold uppercase">SYNC_PROBABILITY</span>
-            <span class="font-['Space_Grotesk'] text-2xl font-bold text-[#0891b2]">98.4%</span>
-          </div>
         </div>
-        <a href="simulation.html" class="px-14 py-5 bg-[#0891b2] text-white font-['Space_Grotesk'] font-bold text-sm tracking-[0.3em] uppercase transition-all active:scale-95 shadow-lg shadow-[#0891b2]/20 hover:brightness-110">
-          START SIMULATION
-        </a>
+        <div class="flex gap-4">
+          <a href="procedures.html" class="px-8 py-4 border border-[#0891b2]/30 text-[#0891b2] font-['Space_Grotesk'] font-bold text-sm tracking-[0.2em] uppercase transition-all hover:bg-[#0891b2]/5 flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Back
+          </a>
+          <a id="start-btn" class="px-14 py-4 text-white font-['Space_Grotesk'] font-bold text-sm tracking-[0.3em] uppercase transition-all active:scale-95 shadow-lg hover:brightness-110">
+            START SIMULATION
+          </a>
+        </div>
       </footer>
     </div>
   </div>
 </main>
 
-<footer class="fixed bottom-0 w-full py-4 px-10 flex justify-between items-center opacity-60 bg-white/80 backdrop-blur-md border-t border-slate-200 z-40">
-  <div class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400">© 2024 SIMETRA CYBERNETICS // ALL RIGHTS RESERVED</div>
-  <div class="flex gap-8">
-    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SYSTEM_STATUS</a>
-    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-slate-400 hover:text-[#0891b2] transition-colors" href="#">SECURITY_ENCRYPTION</a>
-    <a class="font-['Inter'] text-[8px] tracking-[0.2em] uppercase text-[#0891b2] font-bold" href="#">PROTOCOL_v4.2</a>
-  </div>
-</footer>
+<script>
+const PROC_DATA = {
+  cpr: {
+    color: '#10b981', tag: 'CPR SIMULATION',
+    title: 'CPR — CARDIOPULMONARY RESUSCITATION',
+    desc: 'Restore blood circulation through correct compression rhythm. You will assess the patient, begin compressions at the correct BPM, and maintain rhythm consistency.',
+    steps: [
+      { num: '01', name: 'ASSESS PATIENT', icon: 'search', desc: 'Click to check responsiveness and initiate the procedure.' },
+      { num: '02', name: 'BEGIN COMPRESSIONS', icon: 'touch_app', desc: 'Click rhythmically on the chest. Target 100–120 BPM. Too fast or slow = penalty.' },
+      { num: '03', name: 'MAINTAIN RHYTHM', icon: 'timer', desc: 'Sustain compressions for the required duration. Consistency is critical.' },
+      { num: '04', name: 'OUTCOME', icon: 'check_circle', desc: 'Performance evaluated based on rate, rhythm accuracy, and consistency.' }
+    ]
+  },
+  thoracic: {
+    color: '#ef4444', tag: 'EMERGENCY THORACIC ACCESS',
+    title: 'THORACIC ACCESS & HEMORRHAGE CONTROL',
+    desc: 'Gain access to the chest and control critical bleeding. Tests your incision precision, hemorrhage reaction time, and ability to maintain steady pressure.',
+    steps: [
+      { num: '01', name: 'THORACIC INCISION', icon: 'content_cut', desc: 'Drag along the guided path to perform a chest incision. Accuracy and deviation tracked.' },
+      { num: '02', name: 'HEMORRHAGE TRIGGER', icon: 'water_drop', desc: 'Severe bleeding detected — blood spreads visually. React quickly.' },
+      { num: '03', name: 'CONTROL BLEEDING', icon: 'back_hand', desc: 'Click + hold on the bleeding point. Must hold steadily — delay increases difficulty.' },
+      { num: '04', name: 'STABILIZATION', icon: 'verified', desc: 'Bleeding controlled. Transition based on hold stability and reaction time.' }
+    ]
+  },
+  cardiac: {
+    color: '#0891b2', tag: 'CARDIAC ELECTRICAL STABILIZATION',
+    title: 'CARDIAC ELECTRICAL STABILIZATION',
+    desc: 'Correct abnormal electrical signaling in the heart. Identify the irregular signal source among multiple nodes, confirm target, and apply precise stabilization.',
+    steps: [
+      { num: '01', name: 'ANALYZE ACTIVITY', icon: 'monitoring', desc: 'Multiple nodes visible on the heart. Identify and select the one with irregular signal.' },
+      { num: '02', name: 'TARGET CONFIRMED', icon: 'gps_fixed', desc: 'Target locked — brief confirmation transition.' },
+      { num: '03', name: 'APPLY STABILIZATION', icon: 'electric_bolt', desc: 'Click + hold on the node for the correct duration. Unstable hold = penalty.' },
+      { num: '04', name: 'RHYTHM STABILIZED', icon: 'favorite', desc: 'Heartbeat normalizes. Scored on hold duration, stability, and over/under exposure.' }
+    ]
+  },
+  tissue: {
+    color: '#8b5cf6', tag: 'CARDIAC TISSUE REPAIR',
+    title: 'CARDIAC TISSUE REPAIR',
+    desc: 'Repair damaged heart tissue and restore structural integrity. Precision cutting, stabilization holds, and controlled sealing are required.',
+    steps: [
+      { num: '01', name: 'LOCATE DAMAGE', icon: 'search', desc: 'Identify and click the highlighted damaged area on the heart. Selection accuracy tracked.' },
+      { num: '02', name: 'PRECISION INCISION', icon: 'content_cut', desc: 'Short controlled drag to incise. Cut accuracy and smoothness measured.' },
+      { num: '03', name: 'STABILIZE TISSUE', icon: 'back_hand', desc: 'Click + hold steadily. Drifting reduces effectiveness. Duration and stability scored.' },
+      { num: '04', name: 'SEAL REPAIR', icon: 'healing', desc: 'Controlled drag to seal tissue. Completion precision measured.' }
+    ]
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const procId = params.get('proc') || 'cpr';
+const proc = PROC_DATA[procId] || PROC_DATA.cpr;
+
+document.getElementById('header-dot').style.backgroundColor = proc.color;
+document.getElementById('header-dot').className = 'w-2 h-2';
+document.getElementById('header-tag').textContent = proc.tag;
+document.getElementById('header-tag').style.color = proc.color;
+document.getElementById('header-title').textContent = proc.title;
+document.getElementById('header-desc').textContent = proc.desc;
+
+const grid = document.getElementById('steps-grid');
+proc.steps.forEach((s, i) => {
+  grid.innerHTML += `
+    <div class="group relative bg-slate-50 p-6 border border-slate-200 hover:border-[${proc.color}40] hover:bg-white transition-all duration-300">
+      <div class="font-['Space_Grotesk'] text-3xl font-black absolute top-2 right-4 transition-colors" style="color:${proc.color}15">${s.num}</div>
+      <div class="mb-4 h-20 flex items-center justify-center bg-slate-100 border border-slate-200">
+        <span class="material-symbols-outlined text-4xl" style="color:${proc.color}">${s.icon}</span>
+      </div>
+      <h3 class="font-['Space_Grotesk'] font-bold text-xs tracking-widest mb-2" style="color:${proc.color}">${s.name}</h3>
+      <p class="font-['Inter'] text-[11px] text-slate-500 leading-relaxed">${s.desc}</p>
+    </div>`;
+});
+
+const btn = document.getElementById('start-btn');
+btn.style.backgroundColor = proc.color;
+btn.style.boxShadow = `0 10px 25px ${proc.color}33`;
+btn.href = `simulation.html?proc=${procId}`;
+</script>
 </body></html>
