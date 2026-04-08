@@ -39,23 +39,25 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// ── LIGHTING ──────────────────────────────────────────────────
-const ambient = new THREE.AmbientLight(0x0891b2, 0.5);
+// ── LIGHTING (NEUTRAL) ────────────────────────────────────────
+
+// Flat, neutral ambient light from all sides
+const ambient = new THREE.AmbientLight(0xffffff, 1.2);
 scene.add(ambient);
-const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
-dirLight.position.set(4, 6, 4);
+
+// Neutral hemisphere light for even vertical illumination
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1.0);
+scene.add(hemiLight);
+
+// Centered overhead directional light for basic shadows
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+dirLight.position.set(0, 10, 2);
 dirLight.castShadow = true;
-dirLight.shadow.mapSize.set(2048, 2048);
 scene.add(dirLight);
-const rimLight = new THREE.DirectionalLight(0x0891b2, 0.8);
-rimLight.position.set(-4, 2, -4);
-scene.add(rimLight);
-const fillLight = new THREE.PointLight(0x06b6d4, 2.0, 8);
-fillLight.position.set(0, 3, 2);
+
+// Dummy light to satisfy the animation loop's intensity modulation without changing colors
+const fillLight = new THREE.PointLight(0x000000, 0);
 scene.add(fillLight);
-const bottomLight = new THREE.PointLight(0x0891b2, 0.6, 5);
-bottomLight.position.set(0, -2, 0);
-scene.add(bottomLight);
 
 // ── GRID FLOOR ────────────────────────────────────────────────
 const gridHelper = new THREE.GridHelper(30, 60, 0x0891b2, 0x0a1628);
