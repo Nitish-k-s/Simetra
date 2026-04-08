@@ -139,7 +139,14 @@
         <div class="mt-8 h-1 w-full bg-slate-100 relative">
           <div id="score-bar" class="absolute top-0 left-0 h-full bg-[#0891b2] w-[87%] shadow-[0_0_8px_rgba(8,145,178,0.3)]"></div>
         </div>
-        <p class="mt-4 font-['Inter'] text-[10px] text-slate-400 tracking-wider">CALIBRATED AGAINST GLOBAL BENCHMARKS</p>
+        <p class="mt-4 mb-6 font-['Inter'] text-[10px] text-slate-400 tracking-wider">CALIBRATED AGAINST GLOBAL BENCHMARKS</p>
+        <div class="bg-slate-50 p-4 flex justify-between items-center border border-slate-100">
+           <div class="flex items-center space-x-2">
+             <span class="material-symbols-outlined text-[#0891b2] text-sm">timer</span>
+             <span class="font-['Space_Grotesk'] text-[10px] tracking-widest text-slate-500 font-bold uppercase">TIME TAKEN</span>
+           </div>
+           <span id="eval-time-val" class="font-['Space_Grotesk'] font-black text-xl text-[#0891b2] tracking-widest">--:--</span>
+        </div>
       </div>
 
       <!-- AI Feedback -->
@@ -262,6 +269,11 @@ if (raw) {
     const precVal = incStep ? incStep.accuracy : 94;
     const ablVal  = ablStep ? ablStep.accuracy : 91;
     const speedVal = Math.max(30, 100 - Math.round(d.time / 2));
+    const m = String(Math.floor(d.time / 60)).padStart(2, '0');
+    const s = String(d.time % 60).padStart(2, '0');
+
+    const timeEl = document.getElementById('eval-time-val');
+    if (timeEl) timeEl.textContent = `${m}:${s}`;
 
     document.getElementById('score-val').textContent = score;
     document.getElementById('score-bar').style.width = score + '%';
